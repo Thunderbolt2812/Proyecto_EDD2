@@ -20,7 +20,7 @@ public class Main extends javax.swing.JFrame {
     boolean openfile = false;
 
     public void Salvar_Archivo() {
-        
+
         JOptionPane.showMessageDialog(null, "Su archivo se ha guardado exitosamente");
     }
 
@@ -59,7 +59,6 @@ public class Main extends javax.swing.JFrame {
         }
 
     }
-
 
     private void Nuevo_Archivo() {
 
@@ -166,7 +165,6 @@ public class Main extends javax.swing.JFrame {
 
     }
 
- 
     public Main() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -812,36 +810,44 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_Salvar_ArchivoActionPerformed
 
     private void jmi_Cerrar_ArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Cerrar_ArchivoActionPerformed
-        // TODO add your handling code here:
-        try {
-            RAfile.close();
-            Table.setModel(cleanTable);
-            jmi_Campos.setEnabled(false);
-            jm_Registros.setEnabled(false);
-            jm_indices.setEnabled(false);
-            jm_Estandarizacion.setEnabled(false);
-            jmi_Salvar_Archivo.setEnabled(false);
-            jmi_Cerrar_Archivo.setEnabled(false);
-            JOptionPane.showMessageDialog(null, "Cerrado Exitosamente", "Cerrado", JOptionPane.INFORMATION_MESSAGE);
-        } catch (HeadlessException | IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
-        }
+        if (!salvado) {
+            int save = JOptionPane.showConfirmDialog(this, "¿Desea guardar el "
+                    + "archivo?", "Guardar y cerrar.",
+                    JOptionPane.YES_NO_OPTION);
+            if (save == JOptionPane.YES_OPTION) {
+                jmi_Salvar_ArchivoActionPerformed(evt);
+            }
+            salvado = true;
+        }//fin del if
+        // try {
+        //RAfile.close();
+        Table.setModel(cleanTable);
+        jmi_Campos.setEnabled(false);
+        jm_Registros.setEnabled(false);
+        jm_indices.setEnabled(false);
+        jm_Estandarizacion.setEnabled(false);
+        jmi_Salvar_Archivo.setEnabled(false);
+        jmi_Cerrar_Archivo.setEnabled(false);
+        JOptionPane.showMessageDialog(null, "Cerrado Exitosamente", "Cerrado", JOptionPane.INFORMATION_MESSAGE);
+        // } catch (HeadlessException | IOException e) {
+        //  JOptionPane.showMessageDialog(null, "Error al cerrar", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+        // }
     }//GEN-LAST:event_jmi_Cerrar_ArchivoActionPerformed
 
     private void jmi_Cargar_ArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Cargar_ArchivoActionPerformed
         // TODO add your handling code here:
         Cargar_Archivo();
         if (FileSuccess == 1) {
-                jmi_Campos.setEnabled(true);
-                jmi_Modificar_Campo.setEnabled(true);
-                jmi_Crear_Campo.setEnabled(true);
-                jmi_Listar_Campos.setEnabled(true);
-                jmi_Borrar_Campo.setEnabled(true);
-                jm_Registros.setEnabled(true);
-                jm_indices.setEnabled(true);
-                jm_Estandarizacion.setEnabled(true);
-                jmi_Salvar_Archivo.setEnabled(true);
-                jmi_Cerrar_Archivo.setEnabled(true);
+            jmi_Campos.setEnabled(true);
+            jmi_Modificar_Campo.setEnabled(true);
+            jmi_Crear_Campo.setEnabled(true);
+            jmi_Listar_Campos.setEnabled(true);
+            jmi_Borrar_Campo.setEnabled(true);
+            jm_Registros.setEnabled(true);
+            jm_indices.setEnabled(true);
+            jm_Estandarizacion.setEnabled(true);
+            jmi_Salvar_Archivo.setEnabled(true);
+            jmi_Cerrar_Archivo.setEnabled(true);
         }
     }//GEN-LAST:event_jmi_Cargar_ArchivoActionPerformed
 
@@ -863,7 +869,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_Borrar_CampoActionPerformed
 
     private void jmi_Listar_CamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Listar_CamposActionPerformed
-        
+
     }//GEN-LAST:event_jmi_Listar_CamposActionPerformed
 
     private void jmi_Crear_RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Crear_RegistroActionPerformed
@@ -913,7 +919,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_Table1PropertyChange
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        
+
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -942,7 +948,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_reindexarActionPerformed
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
-        
+
     }//GEN-LAST:event_btnSalir1ActionPerformed
 
     private void cboEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEliminarActionPerformed
@@ -1048,5 +1054,6 @@ public class Main extends javax.swing.JFrame {
     int FileSuccess2;
     RandomAccessFile RAfile;
     RandomAccessFile RAfile2;
-    TableModel cleanTable;  
+    TableModel cleanTable;
+    private boolean salvado = true;
 }
