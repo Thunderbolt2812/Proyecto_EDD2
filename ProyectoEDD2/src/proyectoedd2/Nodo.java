@@ -1,11 +1,11 @@
 package proyectoedd2;
 
-public class Nodo<T> {
 
+public class Nodo<T> {
     private T data;
     private Nodo siguiente;
     private Nodo anterior;
-
+    
     public Nodo() {
         this.anterior = null;
         this.siguiente = null;
@@ -41,5 +41,7 @@ public class Nodo<T> {
     public void setAnterior(Nodo anterior) {
         this.anterior = anterior;
     }
-
+    
+    
+    
 }

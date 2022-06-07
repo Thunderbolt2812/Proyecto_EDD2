@@ -1,7 +1,7 @@
 package proyectoedd2;
 
-public class CampoTexto extends Campo {
 
+public class CampoTexto extends Campo{
     protected String texto;
     protected int longitud;
 
@@ -18,8 +18,8 @@ public class CampoTexto extends Campo {
     }
 
     public void setTexto(String texto) {
-
-        if (texto.length() > this.longitud) {
+        
+        if(texto.length() > this.longitud) {
             texto = texto.substring(0, longitud);
         } else {
             for (int i = texto.length(); i < longitud; i++) {
@@ -50,10 +50,8 @@ public class CampoTexto extends Campo {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof CampoTexto)) {
-            return false;
-        }
-
+        if (!(obj instanceof CampoTexto)) return false;
+        
         CampoTexto c = (CampoTexto) obj;
         return this.texto.equals(c.texto);
     }

@@ -1,13 +1,12 @@
 package proyectoedd2;
 
-public class CampoEntero extends Campo {
-
+public class Entero extends Campo{
     protected Integer valor;
 
-    public CampoEntero() {
+    public Entero() {
     }
 
-    public CampoEntero(String nombreCampo) {
+    public Entero(String nombreCampo) {
         super(nombreCampo);
         this.valor = 0;
     }
@@ -27,17 +26,15 @@ public class CampoEntero extends Campo {
 
     @Override
     public int compareTo(Campo o) {
-        CampoEntero comparacion = (CampoEntero) o;
+        Entero comparacion = (Entero) o;
         return this.valor.compareTo(comparacion.getValor());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof CampoEntero)) {
-            return false;
-        }
-
-        CampoEntero c = (CampoEntero) obj;
+        if (!(obj instanceof Entero)) return false;
+        
+        Entero c = (Entero) obj;
         return this.valor.equals(c.valor);
     }
 }

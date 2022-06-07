@@ -1,13 +1,12 @@
 package proyectoedd2;
 
-public class CampoDecimal extends Campo {
-
+public class Decimal extends Campo{
     protected Double valor;
 
-    public CampoDecimal() {
+    public Decimal() {
     }
 
-    public CampoDecimal(String nombreCampo) {
+    public Decimal(String nombreCampo) {
         super(nombreCampo);
         this.valor = 0.0;
     }
@@ -24,20 +23,17 @@ public class CampoDecimal extends Campo {
     public String toString() {
         return valor.toString();
     }
-
-    @Override
+@Override
     public int compareTo(Campo o) {
-        CampoDecimal comparacion = (CampoDecimal) o;
+        Decimal comparacion = (Decimal) o;
         return this.valor.compareTo(comparacion.getValor());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof CampoDecimal)) {
-            return false;
-        }
-
-        CampoDecimal c = (CampoDecimal) obj;
+        if (!(obj instanceof Decimal)) return false;
+        
+        Decimal c = (Decimal) obj;
         return this.valor.equals(c.valor);
     }
 }

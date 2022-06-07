@@ -1,7 +1,7 @@
 package proyectoedd2;
 
+
 public class LinkedList<T> {
-    
     private Nodo<T> cabeza;
     private Nodo<T> cola;
     private int nElementos;

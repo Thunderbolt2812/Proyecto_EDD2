@@ -1,9 +1,8 @@
 package proyectoedd2;
-
 import java.io.Serializable;
 
-public abstract class Campo implements Comparable<Campo>, Serializable {
 
+public abstract class Campo implements Comparable<Campo>, Serializable {
     private static final long serialVersionUID = 888L;
 
     protected String nombreCampo;

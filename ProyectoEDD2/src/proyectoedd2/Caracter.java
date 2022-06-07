@@ -1,15 +1,14 @@
 package proyectoedd2;
 
-public class CampoCaracter extends Campo {
-
+public class Caracter extends Campo{
     protected Character valor;
 
-    public CampoCaracter(String nombreCampo) {
+    public Caracter(String nombreCampo) {
         super(nombreCampo);
         this.valor = ' ';
     }
 
-    public CampoCaracter(Character valor) {
+    public Caracter(Character valor) {
         this.valor = valor;
     }
 
@@ -28,17 +27,15 @@ public class CampoCaracter extends Campo {
 
     @Override
     public int compareTo(Campo o) {
-        CampoCaracter comparacion = (CampoCaracter) o;
+        Caracter comparacion = (Caracter) o;
         return this.valor.compareTo(comparacion.getValor());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof CampoCaracter)) {
-            return false;
-        }
-
-        CampoCaracter c = (CampoCaracter) obj;
+        if (!(obj instanceof Caracter)) return false;
+        
+        Caracter c = (Caracter) obj;
         return this.valor.equals(c.valor);
     }
 }

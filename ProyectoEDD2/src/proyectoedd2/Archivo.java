@@ -15,55 +15,59 @@ import java.util.Date;
 
 public class Archivo {
 
-    protected int primaryKey;
-    protected ArrayList<Integer> secundaryKey;
-    protected int registros;
-    protected int headAvail;
-    protected ArrayList<Campo> campos;
+    protected int llavePrincipal;
+    protected ArrayList<Integer> secundarias;
+    protected Date fechaCreacion;
+    protected int noRegistros;
+    protected int cabezaAvail;
+    protected ArrayList<Campo> camposDelArchivo;
     protected LinkedList<Integer> AvailList;
+    protected BTree<Campo, Integer> arbolIndices;
     protected File baseFile;
 
     public Archivo() {
     }
 
     public Archivo(File archivo, File archivoArbol) {
-        try (RandomAccessFile random = new RandomAccessFile(archivo, "r")) {
+        try (RandomAccessFile raf = new RandomAccessFile(archivo, "r")) {
 
             baseFile = archivo;
 
-            this.headAvail = random.readInt();
-            this.registros = random.readInt();
+            this.cabezaAvail = raf.readInt();//4
+            this.noRegistros = raf.readInt();//4
+            Date fecha = null;
+
             try {
-                this.primaryKey = random.readInt();
+                this.llavePrincipal = raf.readInt();//4
             } catch (Exception e) {
-                this.primaryKey = -1;
+                this.llavePrincipal = -1;
             }
             try {
-                this.secundaryKey = new ArrayList<>();
-                int auxSecundarias = random.readInt();
-                for (int i = 0; i < auxSecundarias; i++) {
+                this.secundarias = new ArrayList<>();
+                int auxSecundarias = raf.readInt();//4
+                for (int i = 0; i < auxSecundarias; i++) {//Este bloque lo hice asi para no tener que almacernar como objeto binario los campos y tener un identificador de su tipo--Nuila
                     try {
-                        this.secundaryKey.add(random.readInt());
+                        this.secundarias.add(raf.readInt());//aun no
                     } catch (NumberFormatException e) {
                     }
                 }
             } catch (Exception e) {
             }
             try {
-                this.campos = new ArrayList<>();
-                int cantidadCampos = random.readInt();//4
-                for (int i = 0; i < cantidadCampos; i++) {
-                    String aux = random.readUTF();
+                this.camposDelArchivo = new ArrayList<>();
+                int cantidadCampos = raf.readInt();//4
+                for (int i = 0; i < cantidadCampos; i++) {//Este bloque lo hice asi para no tener que almacernar como objeto binario los campos y tener un identificador de su tipo--Nuila
+                    String aux = raf.readUTF();
                     if (aux.endsWith("_int")) {
-                        this.campos.add(new CampoEntero(aux));
+                        this.camposDelArchivo.add(new Entero(aux));
                     } else if (aux.endsWith("_dec")) {
-                        this.campos.add(new CampoDecimal(aux));
+                        this.camposDelArchivo.add(new Decimal(aux));
                     } else if (aux.endsWith("_str")) {
                         CampoTexto campoNuevo = new CampoTexto(aux);
-                        campoNuevo.setLongitud(random.readInt());
-                        this.campos.add(campoNuevo);
+                        campoNuevo.setLongitud(raf.readInt());
+                        this.camposDelArchivo.add(campoNuevo);
                     } else if (aux.endsWith("_car")) {
-                        this.campos.add(new CampoCaracter(aux));
+                        this.camposDelArchivo.add(new Caracter(aux));
                     }
                 }
             } catch (Exception e) {
@@ -71,42 +75,56 @@ public class Archivo {
             FileInputStream indices = new FileInputStream(archivoArbol);
             ObjectInputStream os = new ObjectInputStream(indices);
 
+            BTree<Campo, Integer> arbolAux = (BTree<Campo, Integer>) os.readObject();
+
+            this.arbolIndices = arbolAux;
+
             reconstruirAvailList(archivo);
 
         } catch (IOException e) {
+        } catch (ClassNotFoundException ex) {
         }
 
     }
 
-    public Archivo(int primaryKey, int registros, int headAvail, ArrayList<Campo> campos) {
-        this.primaryKey = -1;
-        this.registros = registros;
-        this.headAvail = headAvail;
-        this.campos = campos;
+    public Archivo(int llavePrincipal, Date fechaCreacion, int noRegistros, int cabezaAvail, ArrayList<Campo> camposDelArchivo) {
+        this.llavePrincipal = -1;
+        this.fechaCreacion = fechaCreacion;
+        this.noRegistros = noRegistros;
+        this.cabezaAvail = cabezaAvail;
+        this.camposDelArchivo = camposDelArchivo;
     }
 
-    public int getPrimaryKey() {
-        return primaryKey;
+    public int getLlavePrincipal() {
+        return llavePrincipal;
     }
 
-    public void setPrimaryKey(int llavePrincipal) {
-        this.primaryKey = llavePrincipal;
+    public void setLlavePrincipal(int llavePrincipal) {
+        this.llavePrincipal = llavePrincipal;
     }
 
-    public int getRegistros() {
-        return registros;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setRegistros(int noRegistros) {
-        this.registros = noRegistros;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public int getNoRegistros() {
+        return noRegistros;
+    }
+
+    public void setNoRegistros(int noRegistros) {
+        this.noRegistros = noRegistros;
     }
 
     private int getCabezaAvail() {
-        return headAvail;
+        return cabezaAvail;
     }
 
     public void setCabezaAvail(int cabezaAvail) {
-        this.headAvail = cabezaAvail;
+        this.cabezaAvail = cabezaAvail;
     }
 
     public LinkedList<Integer> getAvailList() {
@@ -118,19 +136,19 @@ public class Archivo {
     }
 
     public ArrayList<Campo> getCamposDelArchivo() {
-        return campos;
+        return camposDelArchivo;
     }
 
     public void setCamposDelArchivo(ArrayList<Campo> camposDelArchivo) {
-        this.campos = camposDelArchivo;
+        this.camposDelArchivo = camposDelArchivo;
     }
 
     public ArrayList<Integer> getSecundarias() {
-        return secundaryKey;
+        return secundarias;
     }
 
     public void setSecundarias(ArrayList<Integer> secundarias) {
-        this.secundaryKey = secundarias;
+        this.secundarias = secundarias;
     }
 
     public File getBaseFile() {
@@ -138,10 +156,10 @@ public class Archivo {
     }
 
     public int tamanioMetadata() {
-        int total = 43 + (4 * secundaryKey.size()) + (31 * campos.size());
+        int total = 43 + (4 * secundarias.size()) + (31 * camposDelArchivo.size());
 
-        for (int i = 0; i < campos.size(); i++) {
-            if (campos.get(i) instanceof CampoTexto) {
+        for (int i = 0; i < camposDelArchivo.size(); i++) {
+            if (camposDelArchivo.get(i) instanceof CampoTexto) {
                 total += 4;
             }
         }
@@ -152,13 +170,13 @@ public class Archivo {
     public int longitudRegistro() {
         int ret = 0;
 
-        for (int i = 0; i < this.campos.size(); i++) {
-            Campo c = campos.get(i);
-            if (c instanceof CampoEntero) {
+        for (int i = 0; i < this.camposDelArchivo.size(); i++) {
+            Campo c = camposDelArchivo.get(i);
+            if (c instanceof Entero) {
                 ret += 4;
-            } else if (c instanceof CampoDecimal) {
+            } else if (c instanceof Decimal) {
                 ret += 8;
-            } else if (c instanceof CampoCaracter) {
+            } else if (c instanceof Caracter) {
                 ret += 2;
             } else {
                 ret += 2 + ((CampoTexto) c).getLongitud();
@@ -168,10 +186,15 @@ public class Archivo {
         return ret + 4; //Sumamos 2 por la escritura del newline con el writeChars() method
     }
 
+    public BTree<Campo, Integer> getArbolIndices() {
+        return arbolIndices;
+    }
+
     public File updateTree(File fileIndices) {
 
         try (FileOutputStream fs = new FileOutputStream(fileIndices, false); ObjectOutputStream os = new ObjectOutputStream(fs)) {
 
+            os.writeObject(this.arbolIndices);
             os.flush();
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
@@ -182,11 +205,11 @@ public class Archivo {
     private void reconstruirAvailList(File file) {
 
         try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
-            int pos = this.headAvail;
+            int pos = this.cabezaAvail;
             this.AvailList = new LinkedList<>();
 
             while (pos != -1) {
-
+                this.AvailList.insertarAlFinal(pos);
                 raf.seek(pos);
 
                 raf.readChar();
@@ -199,32 +222,32 @@ public class Archivo {
     }
 
     public void updateSecondaryKeys(int removed) {
-        for (int i = 0; i < secundaryKey.size(); i++) {
-            int val = secundaryKey.get(i);
+        for (int i = 0; i < secundarias.size(); i++) {
+            int val = secundarias.get(i);
 
             if (val > removed) {
-                secundaryKey.set(i, val - 1);
+                secundarias.set(i, val - 1);
             } else if (val == removed) {
-                Integer old = secundaryKey.remove(i--);
+                Integer old = secundarias.remove(i--);
             }
         }
     }
 
     public int offsetToKey(int key) {
-        if (key < 0 || key >= campos.size()) {
+        if (key < 0 || key >= camposDelArchivo.size()) {
             return -1;
         }
 
         int ret = 2;
 
         for (int i = 0; i < key; i++) {
-            Campo c = campos.get(i);
+            Campo c = camposDelArchivo.get(i);
 
-            if (c instanceof CampoEntero) {
+            if (c instanceof Entero) {
                 ret += 4;
-            } else if (c instanceof CampoDecimal) {
+            } else if (c instanceof Decimal) {
                 ret += 8;
-            } else if (c instanceof CampoCaracter) {
+            } else if (c instanceof Caracter) {
                 ret += 2;
             } else {
                 ret += ((CampoTexto) c).getLongitud() + 2;
