@@ -1,1 +1,0 @@
-Nombre¡string¡18¡Si¡No&Edad¡int¡2¡No¡Si&
