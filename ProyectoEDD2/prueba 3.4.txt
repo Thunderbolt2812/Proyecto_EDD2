@@ -1,0 +1,1 @@
+ID¡int¡13¡Si¡No&Nombre ¡string¡10¡No¡Si&
