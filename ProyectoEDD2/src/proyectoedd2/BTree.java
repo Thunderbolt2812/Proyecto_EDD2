@@ -1,682 +1,372 @@
 package proyectoedd2;
 
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
-public class BTree<K extends Comparable, V> implements Serializable {
-    private static final long serialVersionUID = 888L;
-    
-    public static class Entry<K extends Comparable, V> implements Serializable{
+public class BTree implements Serializable {
 
-        private static final long serialVersionUID = 777L;
-        
-        private K key;
-        private V value;
+    int orden;
+    int raiz;
+    ArrayList<Node> nodos;
+    private static final long SerialVersionUID = 777L;
 
-        public Entry(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
+    public BTree(int orden) {
+        nodos = new ArrayList<Node>();
+        this.orden = orden;
+        nodos.add(new Node(orden));
+        raiz = 0;
+    } // Fin Constructor BTree
 
-        public K getKey() {
-            return key;
-        }
+    public int getOrden() {
+        return orden;
+    } // Fin Get Orden
 
-        public void setKey(K key) {
-            this.key = key;
-        }
+    public void setOrden(int orden) {
+        this.orden = orden;
+    } // Fin Set Orden
 
-        public V getValue() {
-            return value;
-        }
+    public int getRaiz() {
+        return raiz;
+    } // Fin Get Raiz
 
-        public void setValue(V value) {
-            this.value = value;
-        }
+    public void setRaiz(int raiz) {
+        this.raiz = raiz;
+    } // Fin Set Raiz
 
-        @Override
-        public String toString() {
-            return key + "";
-        }
+    public ArrayList<Node> getNodos() {
+        return nodos;
+    } // Fin Get Nodos
 
-    }
-    
-    public static class Node<K extends Comparable, V> implements Serializable{
-        
-        private static final long serialVersionUID = 777L;
+    public void setNodos(ArrayList<Node> nodos) {
+        this.nodos = nodos;
+    } // Fin Set Nodos
 
-        private ArrayList<Entry<K, V>> entries;
-        private ArrayList<Node<K, V>> children;
-        private int t;
+    public int llavesSuperiores() {
+        return orden - 1;
+    } // Fin Llaves Superiores
 
-        // minimum # of keys = (degree - 1)/2
-        // maximum # of keys = degree - 1
-        /**
-         * Creates a new instance of a Node with the given degere.
-         *
-         * @param t The minimum degree of the node
-         */
-        public Node(int t) throws IllegalArgumentException {
-            if (t < 2) {
-                throw new IllegalArgumentException("The degree of the Node cannot be less than 2.");
-            }
+    public int llavesInferiores() {
+        return Math.max((orden / 2) - 1, 1);
+    } // Fin Llaves Inferiores
 
-            this.t = t;
-            entries = new ArrayList<>();
-            children = new ArrayList<>();
-
-            if (t < 16) {
-                entries.ensureCapacity(2 * t);         //Uno más que la capacidad máxima de llaves
-                children.ensureCapacity(2 * t + 1);    //Uno más que la capacidad máxima de hijos
-            }
-
-        }
-
-        public int getMinDegree() {
-            return this.t;
-        }
-
-        public int numChildren() {
-            return children.size();
-        }
-
-        public int numEntries() {
-            return entries.size();
-        }
-
-        public boolean isLeaf() {
-            return children.isEmpty();
-        }
-
-        public void split(Node<K, V> parent, int index) {
-            // minimum # of keys = (degree - 1)/2
-            // maximum # of keys = degree - 1
-            if (this.numEntries() < 2 * t - 1) {
-                return;
-            }
-            Node<K, V> z = new Node<>(t);
-            // Adding half of the leaves to the newly allocated node
-            for (int j = 0; j < t - 1; j++) {
-                z.entries.add(this.getEntry(t + j));     //Already in order
-            }
-            // Removing the same keys from this node
-            for (int j = 0; j < t - 1; j++) {
-                this.entries.remove(this.entries.size() - 1);       // Remove the last key each time
-            }
-            // Adding the corresponding children to the new node
-            if (!this.isLeaf()) {
-                for (int j = 0; j < t; j++) {
-                    z.children.add(this.children.get(t + j));     //Already in order
-                }
-                for (int j = 0; j < t; j++) {
-                    this.children.remove(this.children.size() - 1);     // Remove the last node each time
-                }
-            }
-            // Adding the new node to the list of children of the parent
-            // It is added after the index of this node
-            // It automatically shifts all other nodes
-            parent.children.add(index + 1, z);
-            // Adding the middle key to the list of keys of the parent
-            parent.entries.add(index, this.getEntry(this.entries.size() - 1));
-            // Removing the key that was promoted
-            this.entries.remove(this.entries.size() - 1);
-
-        }
-
-        public void addEntry(K key, V value) {
-            Entry<K, V> entry = new Entry<>(key, value);
-            addEntry(entry);
-            entries.add(entry);
-        }
-
-        public void addEntry(Entry<K, V> entry) {
-            if (entry == null) {
-                return;
-            }
-
-            entries.add(entry);
-            Collections.sort(entries,
-                    (e1, e2) -> {
-                        return e1.getKey().compareTo(e2.getKey());
-                    }
-            );
-        }
-
-        public ArrayList<Node<K, V>> children() {
-            ArrayList<Node<K, V>> c = new ArrayList<>(this.numChildren() + 1);
-            for (int i = 0; i < numChildren(); i++) {
-                c.add(this.children.get(i));
-            }
-            return c;
-        }
-
-        public Node<K, V> getChild(int child) {
-            if (child < 0 || child >= children.size()) {
-                return null;
-            }
-            return children.get(child);
-        }
-
-        public ArrayList<K> keys() {
-            ArrayList<K> k = new ArrayList<>(this.numChildren());
-            for (int i = 0; i < numEntries(); i++) {
-                k.add(this.getEntry(i).getKey());
-            }
-            return k;
-        }
-
-        public K getKey(int index) {
-            if (index < 0 || index >= entries.size()) {
-                return null;
-            }
-
-            return getEntry(index).getKey();
-        }
-
-        public Entry<K, V> getEntry(int index) {
-            if (index < 0 || index >= entries.size()) {
-                return null;
-            }
-
-            return entries.get(index);
-        }
-
-        public Iterable<Entry<K, V>> entries() {
-            ArrayList<Entry<K, V>> e = new ArrayList<>(this.numChildren() + 1);
-            for (int i = 0; i < numEntries(); i++) {
-                e.add(this.getEntry(i));
-            }
-            return e;
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" + entries.toString() + '}';
-        }
-
-        protected class EntryComparator implements Comparator<Entry<K, V>> {
-
-            @Override
-            public int compare(Entry<K, V> e1, Entry<K, V> e2) {
-                return e1.getKey().compareTo(e2.getKey());
-            }
-        }
-    }
-    
-    //--------------------------Fin de la clase NODE--------------------------
-
-    //ATRIBUTES
-    private int t;                  // The minimum degree of the B Tree
-    private int size;               // The number of elements in the tree
-    private Node<K, V> root;        // The root of the tree
-
-    //CONSTRUCTOR
-    /**
-     * Creates an empty multiway B TreeMap with the specified degree.
-     *
-     * @param t The minimum degree of the B Tree
-     * @throws IllegalArgumentException
-     */
-    
-    public BTree(int t) throws IllegalArgumentException {
-
-        if (t < 2) {
-            throw new IllegalArgumentException("The minimum degree of the B Tree cannot be less than 2.");
-        }
-
-        this.t = t;
-
-        Node<K, V> node = new Node<>(t);
-        root = node;
-    }
-    
-    private void toStringPreorder(StringBuilder s, Node<K, V> root, int depth) {
-        if (root == null) {
-            return;
-        }
-        if (root.isLeaf()) {
-            for (int n = 0; n < depth; n++) {
-                s.append("    ");
-            }
-
-            for (int i = 0; i < root.entries.size(); i++) {
-                s.append(root.entries.get(i).getKey().toString());
-                s.append(" ");
-            }
-            s.append('\n');
+    public NodoIndice B_Tree_Search(int index_node, String llave_primaria) {
+        int num = 0;
+        Node nodo = nodos.get((int) index_node);
+        while (num < nodo.getN() && llave_primaria.compareTo(nodo.getLlaves().get(num).getLlave()) > 0) {
+            num++;
+        } // Fin While
+        if (num < nodo.getN() && llave_primaria.compareTo(nodo.getLlaves().get(num).getLlave()) == 0) {
+            return new NodoIndice(nodo, num);
+        } // Fin If
+        if (nodo.isLeaf()) {
+            return null;
         } else {
-            for (int i = 0; i < root.entries.size(); i++) {
+            return B_Tree_Search(nodo.getHijos().get(num), llave_primaria);
+        } // Fin If
+    } // Fin BTree Search
 
-                toStringPreorder(s, root.getChild(i), depth + 1);
-
-                for (int n = 0; n < depth; n++) {
-                    s.append("    ");
-                }
-
-//                if (root == this.root) {
-//                    s.append('\n');
-//                }
-                s.append(root.getKey(i).toString());
-                s.append("\n");
-
-//                if (root == this.root) {
-//                    s.append('\n');
-//                }
-            }
-            toStringPreorder(s, root.getChild(root.entries.size()), depth + 1);
-        }
-    }
-    /**
-     * Realiza una búsqueda en el árbol B en búsqueda de la llave específicada.
-     *
-     * key La llave a buscar
-     * La raíz del subarbol donde buscar la llave
-     * @return Si se encuentra la llave, el nodo y el índice en el nodo de la
-     * llave; de otro modo, se retorna el nodo hoja donde se buscó por último y
-     * el índice del elemento menor que la llave.
-     */
-    
-    //METHODS
-    @Override
-    public String toString() {
-        StringBuilder s = new StringBuilder();
-        toStringPreorder(s, this.root, 0);
-        return "B_TreeMap{\n\n"
-                + s.toString()
-                + "\n}";
-    }
-    
-    
-    private Par<Node<K, V>, Integer> treeSearch(K key, Node<K, V> root) {
+    public void searchByAffinity(int ix, String k, ArrayList<Long> rrns) {
         int i = 0;
-
-        while (i < root.numEntries() && key.compareTo(root.getKey(i)) > 0) {
+        Node xnode = nodos.get((int) ix);
+        while (i < xnode.getN() && k.compareTo(xnode.getLlaves().get(i).getLlave()) > 0) {
             i++;
-        }
+        } // Fin While
+        while (i < xnode.getN() && k.compareTo(xnode.getLlaves().get(i).getLlave()) == 0) {
+            rrns.add(xnode.getLlaves().get(i).getPos());
+            if (!xnode.isLeaf()) {
+                searchByAffinity(xnode.getHijos().get(i), k, rrns);
+            } // Fin If
+            i++;
+        } // Fin While
+        if (!xnode.isLeaf()) {
+            searchByAffinity(xnode.getHijos().get(i), k, rrns);
+        } // Fin If
+    } // Fin Search By Affinity
 
-        if ((i < root.numEntries() && key.compareTo(root.getKey(i)) == 0) || root.isLeaf()) {
-            Par<Node<K, V>, Integer> p = new Par<>(root, i);
-            return p;
-        }
-        return treeSearch(key, root.getChild(i));
-    }
-    
-    /**
-     * Realiza una búsqueda en el árbol B en búsqueda de la llave específicada.
-     *
-     * @param key La llave a buscar
-     * @return Si se encuentra la llave, el nodo y el índice en el nodo de la
-     * llave; de otro modo, retorna null.
-     */
-    public Par<Node<K, V>, Integer> search(K key) {
-
-        Par<Node<K, V>, Integer> pair = treeSearch(key, root);
-
-        Node<K, V> node = pair.getPrimero();
-        int index = pair.getSegundo();
-
-        if (key.equals(node.getKey(index))) {
-            return pair;
-        }
-        return null;
-    }
-    
-    public boolean insert(K key, V value) {
-
-        if (key == null || value == null) {
-            return false;
-        }
-
-        Par<Node<K, V>, Integer> p = search(key);
-
-        if (p != null) {
-            return false;
-        }
-
-        Entry<K, V> e = new Entry(key, value);
-        insert(e);
-        return true;
-    }
-
-    private void insert(Entry<K, V> e) {
-
-        Node<K, V> r = this.root;
-
-        if (r.numEntries() == 2 * t - 1) {
-            Node<K, V> s = new Node<>(t);
-            root = s;
-            s.children.add(r);
-            r.split(s, 0);
-            insertNonFull(s, e);
+    public void B_Tree_Insert(String key, long p) {
+        int ir = raiz;
+        Node r = nodos.get(this.getRaiz());
+        //System.out.println(r.getLlaves().size());
+        //System.out.println(raiz.getLlaves().size());
+        if (r.getN() == llavesSuperiores()) {
+            int is = nodos.size();
+            Node s = new Node(orden);
+            nodos.add(s);
+            raiz = is;
+            s.setLeaf(false);
+            s.setN(0);
+            s.getHijos().set(0, ir);
+            B_Tree_Split_Child(is, 0, ir);
+            B_Tree_Insert_NonFull(is, key, p);
         } else {
-            insertNonFull(r, e);
-        }
-    }
+            B_Tree_Insert_NonFull(ir, key, p);
+        } // Fin If
+    } // Fin BTree Insert
 
-    public int size() {
-        return size;
-    }
-    
-    private void insertNonFull(Node<K, V> root, Entry<K, V> e) {
+    public void B_Tree_Split_Child(int indexx, int i, int indexy) {
+        int iz = nodos.size();
+        Node znode = new Node(orden);
+        nodos.add(znode);
+        Node ynode = nodos.get(indexy);
+        Node xnode = nodos.get(indexx);
+        znode.setLeaf(ynode.isLeaf());
+        znode.setN(this.llavesSuperiores() - this.llavesInferiores() - 1);
+        for (int j = 0; j < znode.getN(); j++) {
+            znode.getLlaves().set(j, ynode.getLlaves().get(j + this.llavesInferiores() + 1));
+        } // Fin For
+        if (!ynode.isLeaf()) {
+            for (int j = 0; j < znode.getN() + 1; j++) {
+                znode.getHijos().set(j, ynode.getHijos().get(j + this.llavesInferiores() + 1));
+            } // Fin For
+        } // Fin If
+        ynode.setN(this.llavesInferiores());
+        xnode.getHijos().add(i + 1, iz);
+        xnode.getHijos().remove(orden);
+        xnode.getLlaves().add(i, ynode.getLlaves().get(this.llavesInferiores()));
+        xnode.getLlaves().remove(this.llavesSuperiores());
+        xnode.setN(xnode.getN() + 1);
+    } // Fin B Tree Split Child
 
-        if (root.isLeaf()) {
-            root.addEntry(e);
-            size++;
+    public void B_Tree_Insert_NonFull(int r, String key, long p) {
+        Node xnode = nodos.get(r);
+        int i = xnode.getN() - 1;
+        if (xnode.isLeaf()) {
+            while (i >= 0 && key.compareTo(xnode.getLlaves().get(i).getLlave()) < 0) {
+                i--;
+            } // Fin While
+            xnode.getLlaves().add(i + 1, new LlavePos(key, p));
+            xnode.getLlaves().remove(this.llavesSuperiores());
+            xnode.setN(xnode.getN() + 1);
         } else {
+            while (i >= 0 && key.compareTo(xnode.getLlaves().get(i).getLlave()) < 0) {
+                i--;
+            } // File While
+            i++;
 
-            //Perform a binary search to find the appropiate child
-            int i = binarySearch(e.getKey(), root.entries, 0, root.entries.size() - 1);
-
-            // Get the appropiate child
-            Node<K, V> c = root.getChild(i);
-
-            // If it has the maximum number of keys, split the node
-            if (c.numEntries() == 2 * t - 1) {
-                c.split(root, i);
-
-                //Compare to the newly added key on the current node
-                if (e.getKey().compareTo(root.getKey(i)) > 0) {
+            if (nodos.get(xnode.getHijos().get(i)).getN() == this.llavesSuperiores()) {
+                B_Tree_Split_Child(r, i, xnode.getHijos().get(i));
+                if (key.compareTo(xnode.getLlaves().get(i).getLlave()) > 0) {
                     i++;
+                } // Fin If
+            } // Fin If
+            B_Tree_Insert_NonFull(xnode.getHijos().get(i), key, p);
+        } // Fin If
+    } // Fin BTree Insert NonFull
+
+    public void B_Tree_Delete_Key(int indexx, String key) {
+        Node xnode = nodos.get(indexx);
+        int pos = xnode.Find(key);
+        if (pos != -1) {
+            if (xnode.isLeaf()) {
+                int i = 0;
+                for (i = 0; i < xnode.getN() && xnode.getLlaves().get(i).getLlave().compareTo(key) != 0; i++) {
                 }
-
-            }
-            insertNonFull(root.getChild(i), e);
-        }
-    }
-
-    public boolean remove(K key) {
-        if (key == null || size == 0) {
-            return false;
-        }
-
-        boolean ret = delete(key, this.root);
-
-        if (this.root.numEntries() == 0 && !this.root.isLeaf()) {
-            this.root = this.root.getChild(0);
-        }
-
-        return ret;
-    }
-
-    /**
-     * Performs a binary search on the specified portion of the ArrayList.
-     *
-     * @param key The key to search for.
-     * @param list The arraylist in which to search the key.
-     * @param start The start of the range to search (inclusive).
-     * @param end The end of the range to search (inclusive).
-     * @return The index of the searched key on the ArrayList, if present. Else,
-     * it returns the index where the key should be inserted.
-     */
-    private int binarySearch(K key, ArrayList<Entry<K, V>> list, int start, int end) {
-
-        // The key is not present
-        if (start > end) {
-            return end + 1;
-        }
-
-        // The middle of the range
-        int mid = (start + end) / 2;
-
-        if (key.equals(list.get(mid).getKey())) // The key has been found
-        {
-            return mid;
-        } else if (key.compareTo(list.get(mid).getKey()) < 0) // The key is less than the element at mid
-        {
-            return binarySearch(key, list, start, mid - 1);
+                for (; i < xnode.getN(); i++) {
+                    if (i != orden - 2) {
+                        xnode.getLlaves().set(i, xnode.getLlaves().get(i + 1));
+                    } // Fin If
+                } // Fin For
+                xnode.setN(xnode.getN() - 1);
+                return;
+            } // Fin If
+            if (!xnode.isLeaf()) {
+                int ipred = xnode.getHijos().get(pos);
+                Node prednode = nodos.get(ipred);
+                String pred_llave = "";
+                long pos_pred = -1;
+                if (prednode.getN() >= llavesInferiores() + 1) {
+                    for (;;) {
+                        if (prednode.isLeaf()) {
+                            pred_llave = prednode.getLlaves().get(prednode.getN() - 1).getLlave();
+                            pos_pred = prednode.getLlaves().get(prednode.getN() - 1).getPos();
+                            break;
+                        } else {
+                            ipred = prednode.getHijos().get(prednode.getN());
+                            prednode = nodos.get(ipred);
+                        } // Fin If
+                    } // Fin For
+                    B_Tree_Delete_Key(indexx, key);
+                    xnode.getLlaves().set(pos, new LlavePos(pred_llave, pos_pred));
+                    return;
+                } // Fin If
+                int inext = xnode.getHijos().get(pos + 1);
+                Node nextNode = nodos.get(inext);
+                if (nextNode.n >= llavesInferiores() + 1) {
+                    String next_llave = nextNode.getLlaves().get(0).getLlave();
+                    long next_pos = -1;
+                    if (!nextNode.isLeaf()) {
+                        inext = nextNode.getHijos().get(0);
+                        nextNode = nodos.get(inext);
+                        for (;;) {
+                            if (nextNode.isLeaf()) {
+                                next_llave = nextNode.getLlaves().get(nextNode.getN() - 1).getLlave();
+                                next_pos = nextNode.getLlaves().get(nextNode.getN() - 1).getPos();
+                                break;
+                            } else {
+                                inext = nextNode.getHijos().get(nextNode.getN());
+                                nextNode = nodos.get(inext);
+                            } // Fin If
+                        } // Fin For
+                    } // Fin If
+                    B_Tree_Delete_Key(inext, next_llave);
+                    xnode.getLlaves().set(pos, new LlavePos(next_llave, next_pos));
+                    return;
+                } // Fin If
+                int temp = prednode.getN() + 1;
+                prednode.getLlaves().set(prednode.n++, xnode.getLlaves().get(pos));
+                for (int i = 0, j = prednode.getN(); i < nextNode.getN(); i++) {
+                    prednode.getLlaves().set(j++, nextNode.getLlaves().get(i));
+                    prednode.n++;
+                } // Fin For
+                for (int i = 0; i < nextNode.n + 1; i++) {
+                    prednode.getHijos().set(temp++, nextNode.getHijos().get(i));
+                } // Fin For
+                xnode.getHijos().set(pos, ipred);
+                for (int i = pos; i < xnode.n; i++) {
+                    if (i != orden - 2) {
+                        xnode.getLlaves().set(i, xnode.getLlaves().get(i + 1));
+                    } // Fin If
+                } // Fin For
+                for (int i = pos + 1; i < xnode.n + 1; i++) {
+                    if (i != orden - 1) {
+                        xnode.getHijos().set(i, xnode.getHijos().get(i + 1));
+                    } // Fin If
+                } // Fin For
+                xnode.n--;
+                if (xnode.n == 0) {
+                    if (indexx == raiz) {
+                        raiz = xnode.getHijos().get(0);
+                    } // Fin If
+                    indexx = xnode.getHijos().get(0);
+                    xnode = nodos.get(indexx);
+                } // Fin If
+                B_Tree_Delete_Key(ipred, key);
+                return;
+            } // Fin If
         } else {
-            return binarySearch(key, list, mid + 1, end);   // The key is greater than the element at mid
-        }
-    }
+            for (pos = 0; pos < xnode.n; pos++) {
+                if (xnode.getLlaves().get(pos).getLlave().compareTo(key) > 0) {
+                    break;
+                } // Fin If
+            }//fin for
+            int i_temp = xnode.getHijos().get(pos);
+            Node temporal = nodos.get(i_temp);
+            if (temporal.n >= llavesInferiores() + 1) {
+                B_Tree_Delete_Key(i_temp, key);
+                return;
+            }//fn if
+            if (true) {
+                int inb = -1;
+                Node nb = null;
+                String divide = "";
+                long dividePos = -1;
 
-    private boolean delete(K k, Node<K, V> root) {
-        if (root == null || root.numEntries() == 0) {
-            return false;
-        }
-
-        int index = binarySearch(k, root.entries, 0, root.entries.size() - 1);
-        boolean contained = index < root.numEntries() && root.getKey(index).equals(k);
-
-        if (root.isLeaf()) {
-
-            //The key is not in the tree
-            if (!contained) {
-                return false;
-            }
-
-            //Remove the key from the leaf node
-            root.entries.remove(index);
-            size--;
-            return true;
-
-        } else if (contained) { //If the key is in an internal node containing the key
-
-            //Get the preceding and succeeding child
-            Node<K, V> prev = root.getChild(index);
-            Node<K, V> next = root.getChild(index + 1);
-
-            if (prev.numEntries() > t - 1) {    //prev has more than the minimum
-
-                //Get the last key from the preceding child
-                Entry<K, V> k_ = prev.getEntry(prev.numEntries() - 1);
-
-                //Replace k with k_
-                Entry<K, V> old = root.entries.get(index);
-                old.setKey(k_.getKey());
-                old.setValue(k_.getValue());
-
-                // Delete k_ from the preceding child
-                return delete(k_.getKey(), prev);
-
-            } else if (next.numEntries() > t - 1) { //next has more than the minimum
-
-                //Get the first key from the succeeding child
-                Entry<K, V> k_ = next.getEntry(0);
-
-                //Replace k with k_
-                Entry<K, V> old = root.entries.get(index);
-                old.setKey(k_.getKey());
-                old.setValue(k_.getValue());
-
-                // Delete k_ from the succeeding child
-                return delete(k_.getKey(), next);
-
-            } else {    //Both nodes have the minimum amount of keys
-
-                //MERGING PREVIOUS AND SUCCEEDING NODES
-                //Add the key to be deleted to the preceding node
-                prev.entries.add(root.entries.remove(index));
-
-                //Add the keys from the succeeding to the preceding node
-                for (int i = 0; i < next.numEntries(); i++) {
-                    prev.entries.add(next.getEntry(i));
-                }
-
-                //Remove the keys from the succeeding node
-                for (int i = next.numEntries() - 1; i >= 0; i--) {
-                    next.entries.remove(i);
-
-                }
-
-                if (!prev.isLeaf()) {
-                    //Add the children from the succeeding to the preceding node
-                    for (int i = 0; i < next.numChildren(); i++) {
-                        prev.children.add(next.getChild(i));
-                    }
-
-                    //Remove the children from the succeeding node
-                    for (int i = next.numChildren() - 1; i >= 0; i--) {
-                        next.children.remove(i);
-                    }
-                }
-
-                //Remove succeeding children from current
-                root.children.remove(index + 1);
-
-                //Recursively delete from merged node
-                return delete(k, prev);
-
-            }
-
-        } else {        //This internal node doesn't have the key
-
-            //The index variable is of that child where the key might be
-            Node<K, V> child = root.getChild(index);
-
-            if (child.numEntries() > t - 1) {
-                return delete(k, child);
-            }
-
-            Node<K, V> sibling;
-            boolean isRight = true;
-
-            if (index == 0) //If child is the first node
-            {
-                sibling = root.getChild(index + 1);
-            } else if (index == root.numChildren() - 1) { //If it is the last node
-                sibling = root.getChild(index - 1);
-                isRight = false;
-            } else if (root.getChild(index + 1).numEntries() > t - 1) {
-                sibling = root.getChild(index + 1);
-            } else {
-                sibling = root.getChild(index - 1);
-                isRight = false;
-            }
-
-            if (isRight) {
-
-                //Borrow from sibling
-                if (sibling.numEntries() > t - 1) {
-                    //Get the first key from the sibling
-                    Entry<K, V> k_ = sibling.entries.remove(0);
-
-                    //Get the corresponding key from the root
-                    Entry<K, V> k_2 = root.entries.get(index);
-
-                    // Replace the key in the root node
-                    root.entries.set(index, k_);
-
-                    //Add the replaced key from the parent node to the child
-                    child.entries.add(k_2);
-
-                    //Move the first child of the sibling to the child
-                    if (!child.isLeaf()) {
-                        child.children.add(sibling.children.remove(0));
-                    }
-
-                    // Delete k from the child
-                    return delete(k, child);
-
-                    //Merge with sibling
+                if (pos != xnode.n && nodos.get(xnode.getHijos().get(pos + 1)).n >= llavesInferiores() + 1) {
+                    divide = xnode.getLlaves().get(pos).getLlave();
+                    dividePos = xnode.getLlaves().get(pos).getPos();
+                    inb = xnode.getHijos().get(pos + 1);
+                    nb = nodos.get(inb);
+                    xnode.getLlaves().set(pos, nb.getLlaves().get(0));
+                    temporal.getLlaves().set(temporal.n++, new LlavePos(divide, dividePos));
+                    temporal.getHijos().set(temporal.n, nb.getHijos().get(0));
+                    for (int i = 1; i < nb.n; i++) {
+                        nb.getLlaves().set(i - 1, nb.getLlaves().get(i));
+                    } // Fin For
+                    for (int i = 1; i <= nb.n; i++) {
+                        nb.getHijos().set(i - 1, nb.getHijos().get(i));
+                    } // Fin For
+                    nb.n--;
+                    B_Tree_Delete_Key(i_temp, key);
+                    return;
+                } else if (pos != 0 && nodos.get(xnode.getHijos().get(pos - 1)).n >= llavesInferiores() + 1) {
+                    divide = xnode.getLlaves().get(pos - 1).getLlave();
+                    dividePos = xnode.getLlaves().get(pos - 1).getPos();
+                    inb = xnode.getHijos().get(pos - 1);
+                    nb = nodos.get(inb);
+                    xnode.getLlaves().set(pos - 1, nb.getLlaves().get(nb.n - 1));
+                    int ichild = nb.getHijos().get(nb.n);
+                    nb.n--;
+                    for (int i = temporal.n; i > 0; i--) {
+                        temporal.getLlaves().set(i, temporal.getLlaves().get(i - 1));
+                    } // Fin For
+                    temporal.getLlaves().set(0, new LlavePos(divide, dividePos));
+                    for (int i = temporal.n + 1; i > 0; i--) {
+                        temporal.getHijos().set(i, temporal.getHijos().get(i - 1));
+                    } // Fin For
+                    temporal.getHijos().set(0, ichild);
+                    temporal.n++;
+                    B_Tree_Delete_Key(i_temp, key);
+                    return;
                 } else {
-                    mergeWithRight(root, child, sibling, index);
+                    int indexlt = -1;
+                    Node lefttemp = null;
+                    int indexrt = -1;
+                    Node righttemp = null;
+                    boolean last = false;
+                    if (pos != xnode.n) {
+                        divide = xnode.getLlaves().get(pos).getLlave();
+                        dividePos = xnode.getLlaves().get(pos).getPos();
+                        indexlt = xnode.getHijos().get(pos);
+                        lefttemp = nodos.get(indexlt);
+                        indexrt = xnode.getHijos().get(pos + 1);
+                        righttemp = nodos.get(indexrt);
+                    } else {
+                        divide = xnode.getLlaves().get(pos - 1).getLlave();
+                        dividePos = xnode.getLlaves().get(pos - 1).getPos();
+                        indexrt = xnode.getHijos().get(pos);
+                        righttemp = nodos.get(indexrt);
+                        indexlt = xnode.getHijos().get(pos - 1);
+                        lefttemp = nodos.get(indexlt);
+                        last = true;
+                        pos--;
+                    } // Fin If
+                    for (int i = pos; i < xnode.n - 1; i++) {
+                        xnode.getLlaves().set(i, xnode.getLlaves().get(i + 1));
+                    } // Fin For
+                    for (int i = pos + 1; i < xnode.n; i++) {
+                        xnode.getHijos().set(i, xnode.getHijos().get(i + 1));
+                    } // Fin For
+                    xnode.n--;
+                    lefttemp.getLlaves().set(lefttemp.n++, new LlavePos(divide, dividePos));
+                    for (int i = 0, j = lefttemp.n; i < righttemp.n + 1; i++, j++) {
+                        if (i < righttemp.n) {
+                            lefttemp.getLlaves().set(j, righttemp.getLlaves().get(i));
+                        } // Fin If
+                        lefttemp.getHijos().set(j, righttemp.getHijos().get(i));
+                    } // Fin For
+                    lefttemp.n += righttemp.n;
+                    if (xnode.n == 0) {
+                        if (indexx == raiz) {
+                            raiz = xnode.getHijos().get(0);
+                        } // Fin If
+                        indexx = xnode.getHijos().get(0);
+                        xnode = nodos.get(indexx);
+                    } // Fin If
+                    B_Tree_Delete_Key(indexlt, key);
+                    return;
+                } // Fin If
+            } // Fin If
+        } // Fin I
+    } // B Tree Delete Key
 
-                    //Recursively delete from merged node
-                    return delete(k, child);
-                }
-
-            } else {
-
-                //Borrow from sibling
-                if (sibling.numEntries() > t - 1) {
-                    //Get the last key from the sibling
-                    Entry<K, V> k_ = sibling.entries.remove(sibling.numEntries() - 1);
-
-                    //Get the corresponding key from the root
-                    Entry<K, V> k_2 = root.entries.get(index - 1);
-
-                    // Replace the key in the root node
-                    root.entries.set(index - 1, k_);
-
-                    //Add the replaced key from the parent node to the child
-                    child.entries.add(0, k_2);
-
-                    //Move the last child of the sibling to the child
-                    if (!child.isLeaf()) {
-                        child.children.add(0, sibling.children.remove(sibling.numChildren() - 1));
-                    }
-
-                    // Delete k from the child
-                    return delete(k, child);
-
-                    //Merge with sibling
+    public void BTree_KeysInOrder(int IndiceNodoActual, ArrayList<Long> lista) {
+        if (IndiceNodoActual >= 0 /*&& lista.size()< 5*/) {//descomentar en caso que solo se deban listar 5 registros y nada mas
+            Node node = nodos.get(IndiceNodoActual);
+            for (int i = 0; i < node.getN(); i++) {
+                if (lista.size() < 5) {//usar este if en caso que solo se deban listar 5 registros y nada mas
+                    BTree_KeysInOrder(node.getHijos().get(i), lista);
+                    lista.add(node.getLlaves().get(i).getPos());
                 } else {
-                    mergeWithLeft(root, child, sibling, index);
-
-                    //Recursively delete from merged node
-                    return delete(k, sibling);
-                }
-            }
-        }
-    }
-
-    private void mergeWithRight(Node<K, V> root, Node<K, V> child, Node<K, V> sibling, int index) {
-        //MERGING CHILD AND RIGHT SIBLING
-
-        //Add the median key to the child
-        child.entries.add(root.entries.remove(index));
-
-        //Add the keys from the sibling to the child
-        for (int i = 0; i < sibling.numEntries(); i++) {
-            child.entries.add(sibling.getEntry(i));
-        }
-
-        //Remove the keys from the sibling
-        for (int i = sibling.numEntries() - 1; i >= 0; i--) {
-            sibling.entries.remove(i);
-
-        }
-
-        if (!child.isLeaf()) {
-            //Add the children from the sibling to the child
-            for (int i = 0; i < sibling.numChildren(); i++) {
-                child.children.add(sibling.getChild(i));
-            }
-
-            //Remove the children from the sibling
-            for (int i = sibling.numChildren() - 1; i >= 0; i--) {
-                sibling.children.remove(i);
-            }
-        }
-
-        //Remove sibling from current
-        root.children.remove(index + 1);
-    }
-
-    private void mergeWithLeft(Node<K, V> root, Node<K, V> child, Node<K, V> sibling, int index) {
-        //MERGING LEFT SIBLING AND CHILD
-
-        //Add the median key to the sibling
-        sibling.entries.add(root.entries.remove(index - 1));
-
-        //Add the keys from the child to the sibling
-        for (int i = 0; i < child.numEntries(); i++) {
-            sibling.entries.add(child.getEntry(i));
-        }
-
-        //Remove the keys from the child
-        for (int i = child.numEntries() - 1; i >= 0; i--) {
-            child.entries.remove(i);
-
-        }
-
-        if (!sibling.isLeaf()) {
-            //Add the children from the child to the sibling
-            for (int i = 0; i < child.numChildren(); i++) {
-                sibling.children.add(child.getChild(i));
-            }
-
-            //Remove the children from the child
-            for (int i = child.numChildren() - 1; i >= 0; i--) {
-                child.children.remove(i);
-            }
-        }
-
-        //Remove child from current
-        root.children.remove(index);
-    }
-    
-    
-}
+                    i = node.getN();
+                } // Fin If
+            } // Fin For
+            BTree_KeysInOrder(node.getHijos().get(node.getN()), lista);
+        } // Fin If
+    } // Fin BTree Keys In Order
+} // Fin Clase BTree

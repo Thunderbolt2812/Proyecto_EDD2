@@ -1,36 +1,115 @@
 package proyectoedd2;
+
 import java.io.Serializable;
 
+public class Campo implements Serializable {
 
-public abstract class Campo implements Comparable<Campo>, Serializable {
-    private static final long serialVersionUID = 888L;
+    private static final long SerialVersionUID = 777L;
 
-    protected String nombreCampo;
+    private int ID;
+    private int ID_archivo;
+    private String nombre;
+    private String tipo_de_dato;
+    private int longitud;
+    private boolean llave_primaria;
+    private boolean llave_secundaria;
 
     public Campo() {
-    }
+    } // Fin Constructor Campo
 
-    public Campo(String nombreCampo) {
-        this.nombreCampo = nombreCampo;
-    }
+    public Campo(int ID, int ID_archivo, String nombre, String tipo_de_dato, int longitud, boolean llave_primaria, boolean llave_secundaria) {
+        this.ID = ID;
+        this.ID_archivo = ID_archivo;
+        this.nombre = nombre;
+        this.tipo_de_dato = tipo_de_dato;
+        this.longitud = longitud;
+        this.llave_primaria = llave_primaria;
+        this.llave_secundaria = llave_secundaria;
+    } // Fin Constructor Campo
 
-    public String getNombreCampo() {
-        return nombreCampo;
-    }
+    public int getID() {
+        return ID;
+    } // Fin Get ID
 
-    public void setNombreCampo(String nombreCampo) {
-        this.nombreCampo = nombreCampo;
+    public void setID(int ID) {
+        this.ID = ID;
+    } // Fin Set ID
+
+    public int getID_archivo() {
+        return ID_archivo;
+    } // Fin Get ID Archivo
+
+    public void setID_archivo(int ID_archivo) {
+        this.ID_archivo = ID_archivo;
+    } // Fin Set ID Archivo
+
+    public String getNombre() {
+        return nombre;
+    } // Fin Get Nombre
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    } // Fin Set Nombre
+
+    public String getTipo_de_dato() {
+        return tipo_de_dato;
+    } // Fin Get Tipo de Dato
+
+    public void setTipo_de_dato(String tipo_de_dato) {
+        this.tipo_de_dato = tipo_de_dato;
+    } // Fin Set Tipo de Dato
+
+    public int getLongitud() {
+        return longitud;
+    } // Fin Get Longitud
+
+    public void setLongitud(int longitud) {
+        this.longitud = longitud;
+    } // Fin Set Longitud
+
+    public boolean isLlavePrimaria() {
+        return llave_primaria;
+    } // Fin Is Llave Primaria
+
+    public void setLlaveprimaria(boolean llave_primaria) {
+        this.llave_primaria = llave_primaria;
+    } // Fin Set Llave Primaria
+
+    public boolean isLlave_secundaria() {
+        return llave_secundaria;
+    } // Fin Is Llave Secundaria
+
+    public void setLlave_secundaria(boolean llave_secundaria) {
+        this.llave_secundaria = llave_secundaria;
+    } // Fin Set Llave Secundaria
+
+    public String campos_para_cruce() {
+        return nombre + tipo_de_dato + longitud;
     }
 
     @Override
-    public abstract String toString();
+    public String toString() {
+        String llave_primaria = "Si";
+        if (!isLlavePrimaria()) {
+            llave_primaria = "No";
+        }// Fin If
+        String llave_secundaria = "Si";
+        if (!isLlave_secundaria()) {
+            llave_secundaria = "No";
+        }// Fin If
+        return "\n    ****************************************" + "\n    Nombre: " + nombre + "\n    Tipo de Dato: " + tipo_de_dato + "\n    Longitud: " + longitud + "\n    Llave Primaria: " + llave_primaria + "\n    Llave Secundaria: " + llave_secundaria + '\n' + "   ****************************************" + '\n';
+    } // Fin ToString
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
+    public String campo_para_archivo() {
+        String llave_primaria = "Si";
+        if (!isLlavePrimaria()) {
+            llave_primaria = "No";
+        }// Fin If
+        String llave_secundaria = "Si";
+        if (!isLlave_secundaria()) {
+            llave_secundaria = "No";
+        }// Fin If
+        return nombre + "¡" + tipo_de_dato + "¡" + longitud + "¡" + llave_primaria + "¡" + llave_secundaria + "&";
+    } // Fin Campo Para Archivo
 
-    @Override
-    public abstract boolean equals(Object obj);
-}
+} // Fin Clase Campo
