@@ -1,0 +1,1 @@
+Numeo de cuenta¡int¡8¡Si¡No&DNI¡string¡13¡No¡Si&Nombre¡string¡50¡No¡No&

@@ -1,1 +1,1 @@
-campo 1¡int¡1¡Si¡No&Campo 1¡int¡10¡Si¡No&Campo 2¡string¡50¡No¡Si&Campo 3¡string¡50¡No¡Si&
+campo 1¡int¡50¡Si¡No&Campo 2¡char¡50¡No¡Si&Campo 3 ¡int¡50¡No¡Si&
