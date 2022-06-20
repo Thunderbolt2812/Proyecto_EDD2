@@ -328,6 +328,7 @@ public class Main extends javax.swing.JFrame {
         jmi_Campos = new javax.swing.JMenu();
         jmi_Crear_Campo = new javax.swing.JMenuItem();
         jmi_Borrar_Campo = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jm_Registros = new javax.swing.JMenu();
         jmi_Crear_Registro = new javax.swing.JMenuItem();
@@ -1846,13 +1847,21 @@ public class Main extends javax.swing.JFrame {
         });
         jmi_Campos.add(jmi_Crear_Campo);
 
-        jmi_Borrar_Campo.setText("Modificar y Eliminar Campos");
+        jmi_Borrar_Campo.setText("Modificar Campos");
         jmi_Borrar_Campo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmi_Borrar_CampoActionPerformed(evt);
             }
         });
         jmi_Campos.add(jmi_Borrar_Campo);
+
+        jMenuItem3.setText("Eliminar Campos");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jmi_Campos.add(jMenuItem3);
 
         jMenuItem2.setText("Listar Campos");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -1963,7 +1972,7 @@ public class Main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 691, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2852,7 +2861,7 @@ public class Main extends javax.swing.JFrame {
     } // Fin Match Nombre Campo
     private void btn_actualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_actualizarMouseClicked
         // Hace todo lo que equivale a salvar archivo , pero es un acceso directo
-          try {
+        try {
             // Actualiza el Text Area
             FileReader fr = null;
             BufferedReader br = null;
@@ -2884,9 +2893,8 @@ public class Main extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_btn_actualizarMouseClicked
 
     private void CB_CampoABorrarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CB_CampoABorrarItemStateChanged
@@ -2926,6 +2934,13 @@ public class Main extends javax.swing.JFrame {
             e.printStackTrace();
         } // Fin Try Catch
     }//GEN-LAST:event_jCb_llavesEliminarRegistrosItemStateChanged
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        JD_Eliminarcampo.setVisible(false);
+        JD_Eliminarcampo.pack();
+        JD_Eliminarcampo.setLocationRelativeTo(this);
+        JD_Eliminarcampo.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -3034,6 +3049,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
