@@ -1,0 +1,1 @@
+campo1¡int¡7¡Si¡No&campo3¡string¡5¡No¡Si&
