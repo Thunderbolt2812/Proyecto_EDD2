@@ -1,1 +1,0 @@
-campo 1¡int¡50¡Si¡No&Campo 2¡char¡50¡No¡Si&Campo 3 ¡int¡50¡No¡Si&
