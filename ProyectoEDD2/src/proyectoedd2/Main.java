@@ -2499,12 +2499,83 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_modregActionPerformed
 
     private void jmi_crearindicesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_crearindicesActionPerformed
-        // TODO add your handling code here:
+        arbolessecundarios.cargarArchivo();
+        boolean arbolseccreado = false;
+        int posllave_secundaria = 0;
+        for (int i = 0; i < archivo_actual.getCampos().size(); i++) {
+            if (archivo_actual.getCampos().get(i).isLlave_secundaria()) {
+                posllave_secundaria = i;
+            } // Fin If
+        } // Fin For
+        for (int i = 0; i < arbolessecundarios.getListaarboles().size(); i++) {
+            if (arbolessecundarios.getListaarboles().get(i).getIDArchivoActual() == archivo_actual.getID()) {
+                arbolseccreado = true;
+                arbol_secundarioactual = arbolessecundarios.getListaarboles().get(i).getArbolSecundario();
+                break;
+            } // Fin If
+        } // Fin For
+        if (arbolseccreado == false) {
+            arbolessecundarios.cargarArchivo();
+            Archivoarbolsecundario archivosecundario = new Archivoarbolsecundario(archivo_actual.getArchivo(), archivo_actual.getID(), new BTree(6));
+            for (int i = 0; i < archivo_actual.getCant_Registros(); i++) {
+                if (i == 0) {
+                    try {
+                        int rrn = 500;
+                        String data = leerregistro(rrn);
+                        String arr[] = data.split("\\|");
+                        String llave = arr[posllave_secundaria];
+                        if (archivo_actual.getCampos().get(posllave_secundaria).getTipo_de_dato().equals("int")) {
+                            int num = archivo_actual.getCampos().get(posllave_secundaria).getLongitud() - llave.length();
+                            llave = espacios.substring(0, num) + llave;
+                        } // Fin If
+                        archivosecundario.getArbolSecundario().B_Tree_Insert(llave, rrn);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                    } // Fin Try Catch
+                } else {
+                    try {
+                        int rrn2 = (250 + (tam_registro() * i)) * 2;
+                        String data;
+                        data = leerregistro(rrn2);
+                        String arr[] = data.split("\\|");
+                        String llave = arr[posllave_secundaria];
+                        if (archivo_actual.getCampos().get(posllave_secundaria).getTipo_de_dato().equals("int")) {
+                            int num = archivo_actual.getCampos().get(posllave_secundaria).getLongitud() - llave.length();
+                            llave = espacios.substring(0, num) + llave;
+                        } // Fin If
+                        archivosecundario.getArbolSecundario().B_Tree_Insert(llave, rrn2);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                    } // Fin Try Catch
+                } // Fin If
+            } // Fin For
+            arbolessecundarios.getListaarboles().add(archivosecundario);
+            arbol_secundarioactual = archivosecundario.getArbolSecundario();
+            arbolessecundarios.escribirArchivo();
+            JOptionPane.showMessageDialog(this, "Se crearon los indices nuevos");
+        } else {
+            JOptionPane.showMessageDialog(null, "Presione el boton reindexar par actualizar sus indices");
+        } // Fin If
     }//GEN-LAST:event_jmi_crearindicesActionPerformed
 
     private void jmi_Exportar_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Exportar_ExcelActionPerformed
-
-
+        rrn_llaves_en_orden = new ArrayList();
+        Excel excel = new Excel();
+        JFileChooser directorio = new JFileChooser();
+        directorio.setApproveButtonText("Exportar");
+        int seleccion = directorio.showOpenDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            try {
+                File archivo_excel = new File(directorio.getSelectedFile() + ".xls");
+                excel.LavesOrdenadas(arbol_actual.getRaiz(), rrn_llaves_en_orden, arbol_actual);
+                JOptionPane.showMessageDialog(null, excel.Llenar(
+                        archivo_actual,
+                        archivo_excel,
+                        rrn_llaves_en_orden));//
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } // Fin Try Catch
+        } // Fin If
     }//GEN-LAST:event_jmi_Exportar_ExcelActionPerformed
 
     private void jmi_Exportrar_XMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Exportrar_XMLActionPerformed
@@ -2512,7 +2583,10 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_Exportrar_XMLActionPerformed
 
     private void jmi_reindexarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_reindexarActionPerformed
-        // TODO add your handling code here:
+        if (arbol_secundarioactual == null) {
+        } else {
+            JOptionPane.showMessageDialog(null, "Sus indices han sido actualizados");
+        }
     }//GEN-LAST:event_jmi_reindexarActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
