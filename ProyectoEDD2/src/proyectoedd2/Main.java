@@ -24,6 +24,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 public class Main extends javax.swing.JFrame {
 
@@ -2567,21 +2578,62 @@ public class Main extends javax.swing.JFrame {
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             try {
                 File archivo_excel = new File(directorio.getSelectedFile() + ".xls");
-                excel.LavesOrdenadas(arbol_actual.getRaiz(), rrn_llaves_en_orden, arbol_actual);
-                JOptionPane.showMessageDialog(null, excel.Llenar(
-                        archivo_actual,
-                        archivo_excel,
-                        rrn_llaves_en_orden));//
+                excel.LlavesOrdenadas(arbol_actual.getRaiz(), rrn_llaves_en_orden, arbol_actual);
+                JOptionPane.showMessageDialog(null, excel.Llenar(archivo_actual, archivo_excel, rrn_llaves_en_orden));
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            } // Fin Try Catch
-        } // Fin If
+            }
+        }
     }//GEN-LAST:event_jmi_Exportar_ExcelActionPerformed
 
     private void jmi_Exportrar_XMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Exportrar_XMLActionPerformed
-
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document documento = builder.newDocument();
+            String Nombre;
+            Nombre = GuardarArchivo.substring(0, GuardarArchivo.length() - 4);
+            Nombre = Nombre.replace(" ", "_");
+            Element root = documento.createElement(Nombre);
+            documento.appendChild(root);
+            rrn_llaves_en_orden = new ArrayList();
+            LlavesOrdenadas(arbol_actual.getRaiz(), rrn_llaves_en_orden, arbol_actual);
+            for (int i = 0; i < rrn_llaves_en_orden.size(); i++) {
+                long RRN = rrn_llaves_en_orden.get(i);
+                String data = leerregistro(Math.toIntExact(RRN));
+                String arr[] = data.split("\\|");
+                Element row = documento.createElement("Registro");
+                for (int j = 0; j < archivo_actual.getCampos().size(); j++) {
+                    Element campo = documento.createElement(archivo_actual.getCampos().get(j).getNombre());
+                    String insertar = arr[j];
+                    Text dato = documento.createTextNode(insertar);
+                    campo.appendChild(dato);
+                    row.appendChild(campo);
+                } // Fin For
+                root.appendChild(row);
+            } // Fin For
+            Source source = new DOMSource(documento);
+            String nameArchivo;
+            nameArchivo = Nombre + ".xml";
+            Result result = new StreamResult(new File(nameArchivo));
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(source, result);
+            JOptionPane.showMessageDialog(this, "¡Exportación Exitosa!");
+            rrn_llaves_en_orden = new ArrayList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
     }//GEN-LAST:event_jmi_Exportrar_XMLActionPerformed
-
+    public void LlavesOrdenadas(int IndiceNodoActual, ArrayList<Long> lista, BTree arbol_actual) {
+        if (IndiceNodoActual >= 0) {
+            Node node = arbol_actual.getNodos().get(IndiceNodoActual);
+            for (int i = 0; i < node.getN(); i++) {
+                LlavesOrdenadas(node.getHijos().get(i), lista, arbol_actual);
+                lista.add(node.getLlaves().get(i).getPos());
+            }
+            LlavesOrdenadas(node.getHijos().get(node.getN()), lista, arbol_actual);
+        }
+    }
     private void jmi_reindexarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_reindexarActionPerformed
         if (arbol_secundarioactual == null) {
         } else {

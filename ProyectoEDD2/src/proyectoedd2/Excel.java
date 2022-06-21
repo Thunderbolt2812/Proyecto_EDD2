@@ -25,14 +25,14 @@ public class Excel{
 
     private Workbook workbook;
 
-    public void LavesOrdenadas(int IndiceNodoActual, ArrayList<Long> lista, BTree arbol_actual) {
+    public void LlavesOrdenadas(int IndiceNodoActual, ArrayList<Long> lista, BTree arbol_actual) {
         if (IndiceNodoActual >= 0) {
             Node node = arbol_actual.getNodos().get(IndiceNodoActual);
             for (int i = 0; i < node.getN(); i++) {
-                LavesOrdenadas(node.getHijos().get(i), lista, arbol_actual);
+                LlavesOrdenadas(node.getHijos().get(i), lista, arbol_actual);
                 lista.add(node.getLlaves().get(i).getPos());
             } 
-            LavesOrdenadas(node.getHijos().get(node.getN()), lista, arbol_actual);
+            LlavesOrdenadas(node.getHijos().get(node.getN()), lista, arbol_actual);
         } 
     } 
 
