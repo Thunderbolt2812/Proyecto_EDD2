@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package proyectoedd2;
 
-/**
- *
- * @author Usuario
- */
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,7 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class Excel{
+public class Excel {
 
     private Workbook workbook;
 
@@ -31,10 +22,10 @@ public class Excel{
             for (int i = 0; i < node.getN(); i++) {
                 LlavesOrdenadas(node.getHijos().get(i), lista, arbol_actual);
                 lista.add(node.getLlaves().get(i).getPos());
-            } 
+            }
             LlavesOrdenadas(node.getHijos().get(node.getN()), lista, arbol_actual);
-        } 
-    } 
+        }
+    }
 
     public String Llenar(Archivo archivo_actual, File archivo_excel, ArrayList<Long> lista) throws IOException {
         String respuesta = "El archivo no se exporto.";
@@ -60,13 +51,13 @@ public class Excel{
                     Cell celda = fila.createCell(j);
                     String insertar = arreglo[j];
                     celda.setCellValue(insertar);
-                } 
-            } 
+                }
+            }
             workbook.write(new FileOutputStream(archivo_excel));
             respuesta = "Archivo Exportado";
         }
         return respuesta;
-    } 
+    }
 
     private String leerRegistro(int RRN, Archivo archivo_actual) {
         String linea = "";

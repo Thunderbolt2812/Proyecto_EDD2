@@ -1,24 +1,16 @@
 package proyectoedd2;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.TableModel;
 import java.io.*;
-import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import java.io.RandomAccessFile;
-import static java.lang.Math.random;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Collections;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -325,6 +317,7 @@ public class Main extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton22 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         TA_ListarCampos1 = new javax.swing.JTextArea();
         jmb_Principal = new javax.swing.JMenuBar();
@@ -1755,6 +1748,19 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jButton22.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton22.setText("PersonFile");
+        jButton22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton22MouseClicked(evt);
+            }
+        });
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -1764,7 +1770,8 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -1774,6 +1781,8 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -2572,7 +2581,7 @@ public class Main extends javax.swing.JFrame {
     private void jmi_Exportar_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Exportar_ExcelActionPerformed
         rrn_llaves_en_orden = new ArrayList();
         Excel excel = new Excel();
-        JFileChooser directorio = new JFileChooser();
+        JFileChooser directorio = new JFileChooser("./");
         directorio.setApproveButtonText("Exportar");
         int seleccion = directorio.showOpenDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
@@ -4013,6 +4022,455 @@ public class Main extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_CB_TipoDeDatoDelCampoItemStateChanged
 
+    private void jButton22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton22MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton22MouseClicked
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        boolean existePrueba = false;
+        aa.cargarArchivo();
+        for (Archivo archivo : aa.getLista_archivos()) {
+            if (archivo.getArchivo().getName().equals("PersonFile.txt")) {
+                existePrueba = true;
+                break;
+            } // Fin If
+        } // Fin For
+        aa.escribirArchivo();
+        arboles.cargarArchivo();
+        if (existePrueba) {
+            aa.cargarArchivo();
+            for (int i = 0; i < aa.getLista_archivos().size(); i++) {
+                if (aa.getLista_archivos().get(i).getArchivo().getName().equals("PersonFile.txt")) {
+                    archivo_actual = aa.getLista_archivos().get(i);
+                    arbol_actual = arboles.getListaarboles().get(i).getArbol();
+                    arbol_secundarioactual = arbolessecundarios.getListaarboles().get(i).getArbolSecundario();
+                    GuardarArchivo = "PersonFile.txt";
+                    break;
+                } // Fin If
+            } // Fin For
+
+        } else {
+            GenerarPersonFile();
+
+        }
+        jmi_Campos.setEnabled(true);
+//        jmi_Modificar_Campo.setEnabled(true);
+        jmi_Crear_Campo.setEnabled(true);
+        jmi_Mod_Campo.setEnabled(true);
+        jm_Registros.setEnabled(true);
+        jm_indices.setEnabled(true);
+        jm_Estandarizacion.setEnabled(true);
+        jmi_Salvar_Archivo.setEnabled(true);
+        jmi_Cerrar_Archivo.setEnabled(true);
+    }//GEN-LAST:event_jButton22ActionPerformed
+    private void GenerarPersonFile() {
+        try {
+            String lineacampos;
+            // Obtenemos los campos en "duro" y los guardamos en un arreglo
+            lineacampos = "PersonId¡int¡6¡Si¡No&PersonName¡String¡20¡No¡No&PersonAge¡int¡3¡No¡No&CityId¡int¡2¡No¡Si¡";
+            String[] campos = lineacampos.split("\\&");
+            // Guarda el archivo actual en el binario con los demas archivos
+            aa.cargarArchivo();
+            int ID;
+            ID = aa.GenerarId();
+            archivo_actual = new Archivo(new File("PersonFile.txt"), ID);
+            GuardarArchivo = "PersonFile.txt";
+            aa.AddArchivo(archivo_actual);
+            aa.escribirArchivo();
+            for (int i = 0; i < campos.length; i++) {
+                // De la linea de un campo luego necesitamos darle split a los atributos del campo 
+                String[] campos2 = campos[i].split("\\¡");
+                String nombreCampo = campos2[0];
+                String tipoCampo = campos2[1];
+                int longitudCampo = (Integer.parseInt(campos2[2]));
+                boolean llavePrimaria, llaveSecundaria;
+                llavePrimaria = false;
+                llaveSecundaria = false;
+                if (campos2[3].equals("Si")) {
+                    llavePrimaria = true;
+                }// Fin If
+                if (campos2[4].equals("Si")) {
+                    llaveSecundaria = true;
+                }// Fin If                
+                // Seteamos dichos campos en el archivo actual
+                int IDCampo;
+                IDCampo = GenerarIDCampo();
+                Campo campo = new Campo(ID, IDCampo, nombreCampo, tipoCampo, longitudCampo, llavePrimaria, llaveSecundaria);
+                archivo_actual.addCampo(campo);
+                aa.cargarArchivo();
+                for (Archivo archivo : aa.getLista_archivos()) {
+                    if (archivo.getID() == archivo_actual.getID()) {
+                        archivo.addCampo(campo);
+                        break;
+                    } // Fin If
+                } // Fin For
+                aa.escribirArchivo();
+            } // Fin For
+            ArrayList<String> PersonFirstName = new ArrayList();
+            // Se generan 60 nombres aleatorios
+            PersonFirstName.add("Diego");
+            PersonFirstName.add("Bilgai");
+            PersonFirstName.add("Hector");
+            PersonFirstName.add("Onasis");
+            PersonFirstName.add("Monica");
+            PersonFirstName.add("Valeria");
+            PersonFirstName.add("Ana");
+            PersonFirstName.add("Cecilia");
+            PersonFirstName.add("Jesus");
+            PersonFirstName.add("Ariel");
+            PersonFirstName.add("Sahory");
+            PersonFirstName.add("Skarleth");
+            PersonFirstName.add("Alejandro");
+            PersonFirstName.add("Fernando");
+            PersonFirstName.add("Paola");
+            PersonFirstName.add("David");
+            PersonFirstName.add("Josue");
+            PersonFirstName.add("Daniel");
+            PersonFirstName.add("Andres");
+            PersonFirstName.add("Carlos");
+            PersonFirstName.add("Eduardo");
+            PersonFirstName.add("Aline");
+            PersonFirstName.add("Alejandra");
+            PersonFirstName.add("Elsi");
+            PersonFirstName.add("Xiomara");
+            PersonFirstName.add("Juan");
+            PersonFirstName.add("Jose");
+            PersonFirstName.add("Omar");
+            PersonFirstName.add("Maria");
+            PersonFirstName.add("Catalina");
+            PersonFirstName.add("Pamela");
+            PersonFirstName.add("Pablo");
+            PersonFirstName.add("Cristopher");
+            PersonFirstName.add("Roberto");
+            PersonFirstName.add("Rafael");
+            PersonFirstName.add("Carlo");
+            PersonFirstName.add("Leonardo");
+            PersonFirstName.add("Karen");
+            PersonFirstName.add("Geovanny");
+            PersonFirstName.add("Rodrigo");
+            PersonFirstName.add("Nicole");
+            PersonFirstName.add("Ariela");
+            PersonFirstName.add("Cristina");
+            PersonFirstName.add("Ashley");
+            PersonFirstName.add("Andrea");
+            PersonFirstName.add("Mario");
+            PersonFirstName.add("Gisselle");
+            PersonFirstName.add("Erica");
+            PersonFirstName.add("Diana");
+            PersonFirstName.add("Santiago");
+            PersonFirstName.add("Angel");
+            PersonFirstName.add("Matias");
+            PersonFirstName.add("Soad");
+            PersonFirstName.add("Gabriel");
+            PersonFirstName.add("Ruben");
+            PersonFirstName.add("Alvaro");
+            PersonFirstName.add("Luisa");
+            PersonFirstName.add("Adrian");
+            PersonFirstName.add("Allan");
+            PersonFirstName.add("Javier");
+            PersonFirstName.add("Luis");
+            ArrayList<String> PersonLastName = new ArrayList();
+            // Se generan 60 apellidos aleatorios
+            PersonLastName.add("Varela");
+            PersonLastName.add("Diaz");
+            PersonLastName.add("Reyes");
+            PersonLastName.add("Andino");
+            PersonLastName.add("Castillo");
+            PersonLastName.add("Mendoza");
+            PersonLastName.add("Meraz");
+            PersonLastName.add("Padilla");
+            PersonLastName.add("Romero");
+            PersonLastName.add("Fuentes");
+            PersonLastName.add("Cano");
+            PersonLastName.add("Rodriguez");
+            PersonLastName.add("Osorto");
+            PersonLastName.add("Coello");
+            PersonLastName.add("Dominguez");
+            PersonLastName.add("Fernandez");
+            PersonLastName.add("Valladares");
+            PersonLastName.add("Cortes");
+            PersonLastName.add("Marcia");
+            PersonLastName.add("Murcia");
+            PersonLastName.add("Pineda");
+            PersonLastName.add("Paz");
+            PersonLastName.add("Rojas");
+            PersonLastName.add("Morales");
+            PersonLastName.add("Chirinos");
+            PersonLastName.add("Gallo");
+            PersonLastName.add("Velasquez");
+            PersonLastName.add("Miranda");
+            PersonLastName.add("Melendez");
+            PersonLastName.add("Garcia");
+            PersonLastName.add("Turcios");
+            PersonLastName.add("Aguilera");
+            PersonLastName.add("Flores");
+            PersonLastName.add("Barahona");
+            PersonLastName.add("Alvarado");
+            PersonLastName.add("Ortiz");
+            PersonLastName.add("Amaya");
+            PersonLastName.add("Iscoa");
+            PersonLastName.add("Gonzalez");
+            PersonLastName.add("Lopez");
+            PersonLastName.add("Cruz");
+            PersonLastName.add("Sanchez");
+            PersonLastName.add("Mejia");
+            PersonLastName.add("Martinez");
+            PersonLastName.add("Hernandez");
+            PersonLastName.add("Perez");
+            PersonLastName.add("Duarte");
+            PersonLastName.add("Figueroa");
+            PersonLastName.add("Licona");
+            PersonLastName.add("Gomez");
+            PersonLastName.add("Caceres");
+            PersonLastName.add("Ayala");
+            PersonLastName.add("Suazo");
+            PersonLastName.add("Cabrera");
+            PersonLastName.add("Sosa");
+            PersonLastName.add("Torres");
+            PersonLastName.add("Caballero");
+            PersonLastName.add("Acosta");
+            PersonLastName.add("Silva");
+            PersonLastName.add("Medina");
+            PersonLastName.add("Galeano");
+            BTree Btreepersons_secundario = new BTree(6);
+            Archivoconarbolb archivo_prueba = new Archivoconarbolb(archivo_actual.getArchivo(), archivo_actual.getID());
+            Archivoarbolsecundario archivo_prueba_secundario = new Archivoarbolsecundario(archivo_actual.getArchivo(), archivo_actual.getID(), Btreepersons_secundario);
+            RandomAccessFile flujo = new RandomAccessFile(new File("PersonFile.txt"), "rw");
+            BTree BTreePersons = new BTree(6);
+            String metadata2;
+            metadata2 = "PersonId¡int¡6¡Si¡No&PersonName¡String¡20¡No¡No&PersonAge¡int¡3¡No¡No&CityId¡int¡2¡No¡Si¡";
+            metadata2 += LlenadoEspacios(metadata2.length(), 250);
+            StringBuffer sbmetadata = new StringBuffer(metadata2);
+            sbmetadata.setLength(250);
+            flujo.writeChars(sbmetadata.toString());
+            // Escribimos los campos en "duro" dentro del archivo
+            random = new Random();
+            int personID;
+            personID = 100000;
+            long RRN;
+            String nombre, apellido, registro, primaryKey, secondaryKey;
+            int edad, cityID;
+            for (int i = 1; i <= 10000; i++) {
+                // Se iran escribiendo de forma aleatoria los registros dentro del archivo
+                nombre = PersonFirstName.get((int) Math.floor(Math.random() * 60));
+                apellido = PersonLastName.get((int) Math.floor(Math.random() * 60));
+                edad = 1 + random.nextInt(99);
+                cityID = 1 + random.nextInt(99);
+                registro = personID + "|" + nombre + " " + apellido + "|" + edad + "|" + cityID + "|";
+                // Llena de espacios si no se completaron los 35 caracteres
+                registro += LlenadoEspacios(registro.length(), 35);
+                StringBuffer sb = new StringBuffer(registro);
+                sb.setLength(35);
+                flujo.writeChars(sb.toString());
+                RRN = setRrn();
+                // Obtenemos la llave primaria para poder insertarla en el arbolB
+                primaryKey = String.valueOf(personID);
+                primaryKey = espacios.substring(0, 6 - primaryKey.length()) + primaryKey;
+                BTreePersons.B_Tree_Insert(primaryKey, RRN);
+                personID++;
+                // Obtenemos la llave secundaria para poder insertarla en el arbolB
+                secondaryKey = String.valueOf(cityID);
+                secondaryKey = espacios.substring(0, 2 - secondaryKey.length()) + secondaryKey;
+                if (Btreepersons_secundario.B_Tree_Search(Btreepersons_secundario.getRaiz(), secondaryKey) == null) {
+                    Btreepersons_secundario.B_Tree_Insert(secondaryKey, RRN);
+                }
+            } // Fin For
+            // Escrbir en el archivoconArbolB
+            archivo_prueba.setArbol(BTreePersons);
+            // Escribir en el binario de arbol
+            arboles.cargarArchivo();
+            arboles.getListaarboles().add(archivo_prueba);
+            arboles.escribirArchivo();
+            arbol_actual = BTreePersons;
+            //
+            archivo_prueba_secundario.setArbolSecundario(Btreepersons_secundario);
+            // Escribir en el binario de arbol
+            arbolessecundarios.cargarArchivo();
+            arbolessecundarios.getListaarboles().add(archivo_prueba_secundario);
+            arbol_secundarioactual = Btreepersons_secundario;
+            arbolessecundarios.escribirArchivo();
+            GenerarCityFile();
+            JOptionPane.showMessageDialog(null, "Archivo cargado exitosamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
+    }
+
+    private void GenerarCityFile() {
+        try {
+            String lineacampos;
+            // Obtenemos los campos en "duro"y los guardamos en un arreglo
+            lineacampos = "CityId¡int¡2¡Si¡No&CityName¡char¡30¡No¡No¡";
+            String[] campos = lineacampos.split("\\&");
+            // Guarda el archivo actual en el binario con los demas archivos
+            aa.cargarArchivo();
+            int ID;
+            ID = aa.GenerarId();
+            Archivo archivoC = new Archivo(new File("CityFile.txt"), ID);
+            aa.AddArchivo(archivoC);
+            aa.escribirArchivo();
+            for (int i = 0; i < campos.length; i++) {
+                // De la linea de un campo luego necesitamos darle split a los atributos del campo 
+                String[] campos2 = campos[i].split("\\¡");
+                String nombreCampo = campos2[0];
+                String tipoCampo = campos2[1];
+                int longitudCampo = (Integer.parseInt(campos2[2]));
+                boolean llavePrimaria, llaveSecundaria;
+                llavePrimaria = false;
+                llaveSecundaria = false;
+                if (campos2[3].equals("Si")) {
+                    llavePrimaria = true;
+                }// Fin If
+                if (campos2[4].equals("Si")) {
+                    llaveSecundaria = true;
+                }// Fin If                
+                // Seteamos dichos campos en el archivo actual
+                int IDCampo;
+                IDCampo = GenerarIDCampo();
+                Campo campo = new Campo(ID, IDCampo, nombreCampo, tipoCampo, longitudCampo, llavePrimaria, llaveSecundaria);
+                aa.cargarArchivo();
+                for (Archivo archivo : aa.getLista_archivos()) {
+                    if (archivo.getID() == archivoC.getID()) {
+                        archivo.addCampo(campo);
+                        break;
+                    } // Fin If
+                } // Fin For
+                aa.escribirArchivo();
+            } // Fin For
+            ArrayList<String> CityName = new ArrayList();
+            // Se generan 100 ciudades aleatorias
+            CityName.add("Tokio");
+            CityName.add("Nueva York");
+            CityName.add("Los Angeles");
+            CityName.add("Paris");
+            CityName.add("Seul");
+            CityName.add("Londres");
+            CityName.add("Osaka");
+            CityName.add("Shanghai");
+            CityName.add("Chicago");
+            CityName.add("Moscu");
+            CityName.add("Pekin");
+            CityName.add("Colonia");
+            CityName.add("Houston");
+            CityName.add("Washington D.C.");
+            CityName.add("Sao Paulo");
+            CityName.add("Hong Kong");
+            CityName.add("Dallas");
+            CityName.add("Ciudad de Mexico");
+            CityName.add("Canton");
+            CityName.add("Singapur");
+            CityName.add("Boston");
+            CityName.add("Estambul");
+            CityName.add("Filadelfia");
+            CityName.add("San Francisco");
+            CityName.add("Taipei");
+            CityName.add("Amsterdam");
+            CityName.add("Buenos Aires");
+            CityName.add("Milan");
+            CityName.add("Bangkok");
+            CityName.add("Atalanta");
+            CityName.add("Barcelona");
+            CityName.add("Liverpool");
+            CityName.add("Madrid");
+            CityName.add("Delhi");
+            CityName.add("Tegucigalpa");
+            CityName.add("Lisboa");
+            CityName.add("Las Vegas");
+            CityName.add("Manchester");
+            CityName.add("Lyon");
+            CityName.add("Venecia");
+            CityName.add("Praga");
+            CityName.add("Dubai");
+            CityName.add("Turin");
+            CityName.add("Guadalajara");
+            CityName.add("Oslo");
+            CityName.add("Bucarest");
+            CityName.add("Memphis");
+            CityName.add("Ottawa");
+            CityName.add("Valencia");
+            CityName.add("Florencia");
+            CityName.add("Alejandria");
+            CityName.add("Bremen");
+            CityName.add("Bristol");
+            CityName.add("Niza");
+            CityName.add("Ginebra");
+            CityName.add("Sofia");
+            CityName.add("Oporto");
+            CityName.add("Leipzig");
+            CityName.add("Sevilla");
+            CityName.add("Quebec");
+            CityName.add("Nantes");
+            CityName.add("Zagreb");
+            CityName.add("Kuala Lumpur");
+            CityName.add("Zaragoza");
+            CityName.add("Murcia");
+            CityName.add("San Pedro Sula");
+            CityName.add("La Esperanza");
+            CityName.add("Bilbao");
+            CityName.add("Kiev");
+            CityName.add("San Petersburgo");
+            CityName.add("Atenas");
+            CityName.add("Francfort");
+            CityName.add("Basilea");
+            CityName.add("Gotemburgo");
+            CityName.add("Auckland");
+            CityName.add("Wellington");
+            CityName.add("Stuttgart");
+            CityName.add("La Ceiba");
+            CityName.add("Comayagua");
+            CityName.add("El Progreso");
+            CityName.add("Choloma");
+            CityName.add("Danli");
+            CityName.add("La Lima");
+            CityName.add("Juticalpa");
+            CityName.add("Tela");
+            CityName.add("Trujillo");
+            CityName.add("Catacamas");
+            CityName.add("Omoa");
+            CityName.add("Tocoa");
+            CityName.add("Talanga");
+            CityName.add("Virginia");
+            CityName.add("Marcala");
+            CityName.add("Yuscaran");
+            CityName.add("Puerto Lempira");
+            CityName.add("Gracias");
+            CityName.add("Amapala");
+            CityName.add("San Diego");
+            CityName.add("Montevideo");
+            CityName.add("Marsella");
+            CityName.add("Minsk");
+            CityName.add("Riga");
+            Collections.shuffle(CityName);
+            aa.escribirArchivo();
+            RandomAccessFile flujo = new RandomAccessFile(new File("CityFile.txt"), "rw");
+            String metadata2;
+            metadata2 = "CityId¡int¡2¡Si¡No&CityName¡char¡30¡No¡No¡";
+            metadata2 += LlenadoEspacios(metadata2.length(), 250);
+            StringBuffer sbmetadata = new StringBuffer(metadata2);
+            sbmetadata.setLength(250);
+            flujo.writeChars(sbmetadata.toString());
+            String registro, primaryKey;
+            for (int i = 0; i <= 99; i++) {
+                if (i <= 9) {
+                    registro = "0" + i + "|" + CityName.get(i) + "|";
+                    registro += LlenadoEspacios(registro.length(), 34);
+                    primaryKey = "0" + i;
+                } else {
+                    registro = i + "|" + CityName.get(i) + "|";
+                    registro += LlenadoEspacios(registro.length(), 34);
+                    primaryKey = i + "";
+                } // Fin If
+                StringBuffer sb = new StringBuffer(registro);
+                sb.setLength(34);
+                flujo.writeChars(sb.toString());
+                primaryKey = espacios.substring(0, 2 - primaryKey.length()) + primaryKey;
+            } // Fin For            
+            flujo.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
+    }
+
     private boolean ValidaciondeingresoTabla(JTable tabla, boolean guardar) {
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         if (tabla.isEditing()) {
@@ -4303,6 +4761,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
