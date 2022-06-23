@@ -1,0 +1,3 @@
+- Librerias estan ubicadas en una carpeta del proyecto
+- El boton PersonFile genera el archivo de prueba
+- Archivos de prueba estan en una carpeta en el proyecto

@@ -2817,6 +2817,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Presione el boton reindexar par actualizar sus indices");
         }
+        jmi_reindexar.setEnabled(true);
     }//GEN-LAST:event_jmi_crearindicesActionPerformed
 
     private void jmi_Exportar_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Exportar_ExcelActionPerformed
@@ -4302,6 +4303,7 @@ public class Main extends javax.swing.JFrame {
         jm_Estandarizacion.setEnabled(true);
         jmi_Salvar_Archivo.setEnabled(true);
         jmi_Cerrar_Archivo.setEnabled(true);
+        jmi_reindexar.setEnabled(true);
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
