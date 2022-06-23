@@ -1,9 +1,11 @@
+
 package proyectoedd2;
 
 import java.io.Serializable;
 
-public class LlavePos implements Serializable {
 
+public class LlavePos implements Serializable {
+    
     private String llave;
     private long pos;
 
@@ -32,5 +34,5 @@ public class LlavePos implements Serializable {
     public String toString() {
         return "{" + "llave=" + llave + ", pos=" + pos + '}';
     }
-
+    
 }

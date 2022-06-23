@@ -287,14 +287,23 @@ public class Main extends javax.swing.JFrame {
         jPanel39 = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
         TablaEliminarRegistro = new javax.swing.JTable();
-        JD_Listar_registros = new javax.swing.JDialog();
+        JD_Cruzar_Archivo = new javax.swing.JDialog();
         jPanel40 = new javax.swing.JPanel();
         jPanel41 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        jTbl_ListarRegistros = new javax.swing.JTable();
         jPanel42 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        Btn_abrir_archivo = new javax.swing.JButton();
+        jButton24 = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();
+        jButton25 = new javax.swing.JButton();
+        jButton26 = new javax.swing.JButton();
+        jPanel22 = new javax.swing.JPanel();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        jTbl_CamposParaCruceSelecionar = new javax.swing.JTable();
+        jPanel24 = new javax.swing.JPanel();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        jTbl_CamposCruzados = new javax.swing.JTable();
         JD_Buscar_registro = new javax.swing.JDialog();
         jPanel43 = new javax.swing.JPanel();
         jPanel44 = new javax.swing.JPanel();
@@ -308,6 +317,14 @@ public class Main extends javax.swing.JFrame {
         jPanel47 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         TablaBuscarRegistro = new javax.swing.JTable();
+        JD_Listar_registros = new javax.swing.JDialog();
+        jPanel48 = new javax.swing.JPanel();
+        jPanel49 = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        jTbl_ListarRegistros1 = new javax.swing.JTable();
+        jPanel50 = new javax.swing.JPanel();
+        jButton23 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -338,6 +355,7 @@ public class Main extends javax.swing.JFrame {
         jmi_Buscar_Registro = new javax.swing.JMenuItem();
         jmi_modreg = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jm_indices = new javax.swing.JMenu();
         jmi_crearindices = new javax.swing.JMenuItem();
         jmi_reindexar = new javax.swing.JMenuItem();
@@ -1421,36 +1439,53 @@ public class Main extends javax.swing.JFrame {
 
         jLabel27.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel27.setText("Listar Registros");
+        jLabel27.setText("Cruzar Archivos");
 
         javax.swing.GroupLayout jPanel41Layout = new javax.swing.GroupLayout(jPanel41);
         jPanel41.setLayout(jPanel41Layout);
         jPanel41Layout.setHorizontalGroup(
             jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel41Layout.createSequentialGroup()
-                .addGap(325, 325, 325)
+                .addGap(252, 252, 252)
                 .addComponent(jLabel27)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel41Layout.setVerticalGroup(
             jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel41Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel27)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        jTbl_ListarRegistros.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane10.setViewportView(jTbl_ListarRegistros);
-
         jPanel42.setBackground(new java.awt.Color(0, 153, 153));
+
+        javax.swing.GroupLayout jPanel42Layout = new javax.swing.GroupLayout(jPanel42);
+        jPanel42.setLayout(jPanel42Layout);
+        jPanel42Layout.setHorizontalGroup(
+            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 781, Short.MAX_VALUE)
+        );
+        jPanel42Layout.setVerticalGroup(
+            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 75, Short.MAX_VALUE)
+        );
+
+        jPanel21.setBackground(new java.awt.Color(0, 153, 153));
+
+        Btn_abrir_archivo.setText("Abrir Archivo");
+        Btn_abrir_archivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_abrir_archivoActionPerformed(evt);
+            }
+        });
+
+        jButton24.setText("Mostrar");
+        jButton24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton24ActionPerformed(evt);
+            }
+        });
 
         jButton19.setText("Regresar");
         jButton19.addActionListener(new java.awt.event.ActionListener() {
@@ -1459,52 +1494,152 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel42Layout = new javax.swing.GroupLayout(jPanel42);
-        jPanel42.setLayout(jPanel42Layout);
-        jPanel42Layout.setHorizontalGroup(
-            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel42Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(296, 296, 296))
+        jButton25.setText("Añadir");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
+
+        jButton26.setText("Cruzar");
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton26ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Btn_abrir_archivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButton25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        jPanel42Layout.setVerticalGroup(
-            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel42Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addGap(99, 99, 99)
+                .addComponent(Btn_abrir_archivo)
+                .addGap(32, 32, 32)
+                .addComponent(jButton24)
+                .addGap(18, 18, 18)
+                .addComponent(jButton25)
+                .addGap(18, 18, 18)
+                .addComponent(jButton26)
+                .addGap(18, 18, 18)
                 .addComponent(jButton19)
-                .addGap(20, 20, 20))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel22.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel22.setBorder(javax.swing.BorderFactory.createTitledBorder("Elige el campo que deseas cruzar"));
+        jPanel22.setForeground(new java.awt.Color(51, 51, 51));
+
+        jTbl_CamposParaCruceSelecionar.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane13.setViewportView(jTbl_CamposParaCruceSelecionar);
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane13)
+                .addContainerGap())
+        );
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel24.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel24.setBorder(javax.swing.BorderFactory.createTitledBorder("Campos Cruzados"));
+        jPanel24.setForeground(new java.awt.Color(51, 51, 51));
+
+        jTbl_CamposCruzados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane14.setViewportView(jTbl_CamposCruzados);
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel40Layout = new javax.swing.GroupLayout(jPanel40);
         jPanel40.setLayout(jPanel40Layout);
         jPanel40Layout.setHorizontalGroup(
             jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel40Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-            .addComponent(jPanel42, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel40Layout.createSequentialGroup()
+                .addGroup(jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel40Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel40Layout.setVerticalGroup(
             jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel40Layout.createSequentialGroup()
                 .addComponent(jPanel41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel42, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout JD_Listar_registrosLayout = new javax.swing.GroupLayout(JD_Listar_registros.getContentPane());
-        JD_Listar_registros.getContentPane().setLayout(JD_Listar_registrosLayout);
-        JD_Listar_registrosLayout.setHorizontalGroup(
-            JD_Listar_registrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout JD_Cruzar_ArchivoLayout = new javax.swing.GroupLayout(JD_Cruzar_Archivo.getContentPane());
+        JD_Cruzar_Archivo.getContentPane().setLayout(JD_Cruzar_ArchivoLayout);
+        JD_Cruzar_ArchivoLayout.setHorizontalGroup(
+            JD_Cruzar_ArchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        JD_Listar_registrosLayout.setVerticalGroup(
-            JD_Listar_registrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        JD_Cruzar_ArchivoLayout.setVerticalGroup(
+            JD_Cruzar_ArchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1672,6 +1807,99 @@ public class Main extends javax.swing.JFrame {
             .addComponent(jPanel43, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        jPanel48.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel49.setBackground(new java.awt.Color(0, 153, 153));
+
+        jLabel29.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setText("Listar Registros");
+
+        javax.swing.GroupLayout jPanel49Layout = new javax.swing.GroupLayout(jPanel49);
+        jPanel49.setLayout(jPanel49Layout);
+        jPanel49Layout.setHorizontalGroup(
+            jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel49Layout.createSequentialGroup()
+                .addGap(325, 325, 325)
+                .addComponent(jLabel29)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel49Layout.setVerticalGroup(
+            jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel49Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel29)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        jTbl_ListarRegistros1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane12.setViewportView(jTbl_ListarRegistros1);
+
+        jPanel50.setBackground(new java.awt.Color(0, 153, 153));
+
+        jButton23.setText("Regresar");
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton23ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel50Layout = new javax.swing.GroupLayout(jPanel50);
+        jPanel50.setLayout(jPanel50Layout);
+        jPanel50Layout.setHorizontalGroup(
+            jPanel50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel50Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(296, 296, 296))
+        );
+        jPanel50Layout.setVerticalGroup(
+            jPanel50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel50Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jButton23)
+                .addGap(20, 20, 20))
+        );
+
+        javax.swing.GroupLayout jPanel48Layout = new javax.swing.GroupLayout(jPanel48);
+        jPanel48.setLayout(jPanel48Layout);
+        jPanel48Layout.setHorizontalGroup(
+            jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel49, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel48Layout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+            .addComponent(jPanel50, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel48Layout.setVerticalGroup(
+            jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel48Layout.createSequentialGroup()
+                .addComponent(jPanel49, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel50, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout JD_Listar_registrosLayout = new javax.swing.GroupLayout(JD_Listar_registros.getContentPane());
+        JD_Listar_registros.getContentPane().setLayout(JD_Listar_registrosLayout);
+        JD_Listar_registrosLayout.setHorizontalGroup(
+            JD_Listar_registrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel48, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        JD_Listar_registrosLayout.setVerticalGroup(
+            JD_Listar_registrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel48, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -1724,6 +1952,11 @@ public class Main extends javax.swing.JFrame {
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -1949,6 +2182,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jm_Registros.add(jMenuItem1);
+
+        jMenuItem3.setText("Cruzar archivos");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jm_Registros.add(jMenuItem3);
 
         jmb_Principal.add(jm_Registros);
 
@@ -2575,7 +2816,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Se crearon los indices nuevos");
         } else {
             JOptionPane.showMessageDialog(null, "Presione el boton reindexar par actualizar sus indices");
-        } // Fin If
+        }
     }//GEN-LAST:event_jmi_crearindicesActionPerformed
 
     private void jmi_Exportar_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Exportar_ExcelActionPerformed
@@ -3014,7 +3255,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         if (!(arbol_actual == null)) {
-            avanzar = 5;
+            avanzar = 50;
             retroceder = 0;
             rrn_llaves_en_orden = new ArrayList();
             arbol_actual.BTree_KeysInOrder(arbol_actual.getRaiz(), rrn_llaves_en_orden);
@@ -3450,7 +3691,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        JD_Listar_registros.dispose();
+        JD_Cruzar_Archivo.dispose();
         this.setVisible(true);
     }//GEN-LAST:event_jButton19ActionPerformed
 
@@ -3576,7 +3817,6 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
         if (TF_LlaveModificarRegistro.getText().equals("") || CB_LlavesModificarRegistro.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese la llave del registro que desea buscar");
             TF_LlaveModificarRegistro.setText("");
@@ -3695,7 +3935,7 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No existen nuevos indices creados, dirijase al Menu Indices");
             } // Fin If
         } // Fin If
-        TF_LlaveModificarRegistro.setText("");        // TODO add your handling code here:
+        TF_LlaveModificarRegistro.setText("");
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
@@ -3755,7 +3995,7 @@ public class Main extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             } // Fin Try Catch
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
@@ -3862,7 +4102,7 @@ public class Main extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "No se puede buscar porque no existen indices nuevos creados");
             } // Fin If
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -3985,7 +4225,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "El registro a sido eliminado exitosamente");
         } else {
             JOptionPane.showMessageDialog(this, "No existen registros guardados.");
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void RB_LlavePrimariaDelCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RB_LlavePrimariaDelCampoActionPerformed
@@ -4063,7 +4303,451 @@ public class Main extends javax.swing.JFrame {
         jmi_Salvar_Archivo.setEnabled(true);
         jmi_Cerrar_Archivo.setEnabled(true);
     }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        this.setVisible(false);
+        JD_Cruzar_Archivo.setVisible(false);
+        JD_Cruzar_Archivo.pack();
+        JD_Cruzar_Archivo.setLocationRelativeTo(this);
+        JD_Cruzar_Archivo.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        JD_Listar_registros.dispose();
+        this.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton23ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void Btn_abrir_archivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_abrir_archivoActionPerformed
+        String save = "";
+        try {
+            // VALIDACIÓN: SI INGRESO EL NOMBRE DE UN ARCHIVO QUE NO EXISTE TIRA ERROR
+            if (JOptionPane.showConfirmDialog(null, "¿Desea utilizar un archivo de prueba?", "Confirmación", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                boolean existePrueba = false;
+                aa.cargarArchivo();
+                for (Archivo archivo : aa.getLista_archivos()) {
+                    if (archivo.getArchivo().getName().equals("PersonFile.txt")) {
+                        existePrueba = true;
+                        break;
+                    } // Fin If
+                } // Fin For
+                aa.escribirArchivo();
+                if (existePrueba) {
+                    aa.cargarArchivo();
+                    for (int i = 0; i < aa.getLista_archivos().size(); i++) {
+                        if (aa.getLista_archivos().get(i).getArchivo().getName().equals("PersonFile.txt")) {
+                            archivo_para_cruzar = aa.getLista_archivos().get(i);
+                            save = "PersonFile.txt";
+                            break;
+                        } // Fin If
+                    } // Fin For
+                } else {
+                    GenerarPersonFile();
+                } // Fin If
+                //termina abrir de prueba
+            } else {
+                File archivo_abrir = null;
+                FileReader fr = null;
+                BufferedReader br = null;
+                TA_ArchivoAbierto.setText("");
+                JFileChooser filechooser = new JFileChooser("./");
+                FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de Texto", "txt");
+                //FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Imagenes", "jpg", "png", "bmp");
+                filechooser.setFileFilter(filtro);
+                //filechooser.addChoosableFileFilter(filtro2);
+                int seleccion = filechooser.showOpenDialog(null);
+                if (seleccion == JFileChooser.APPROVE_OPTION) {
+                    archivo_abrir = filechooser.getSelectedFile();
+                    save = archivo_abrir.getName();
+                    boolean valid = false;
+                    aa.cargarArchivo();
+                    for (int i = 0; i < aa.getLista_archivos().size(); i++) {
+                        if (aa.getLista_archivos().get(i).getArchivo().equals(archivo_abrir)) {
+                            valid = true;
+                            archivo_para_cruzar = aa.getLista_archivos().get(i);
+                            break;
+                        } // Fin If
+                    } // Fin For
+                    if (!valid) {
+                        int ID;
+                        aa.cargarArchivo();
+                        ID = aa.GenerarId();
+                        archivo_para_cruzar = new Archivo(archivo_abrir, ID);
+                        save = null;
+                        // AQUI FALTA SETEARLE LOS CAMPOS
+                        aa.AddArchivo(archivo_para_cruzar);
+                        aa.escribirArchivo();
+                        save = archivo_para_cruzar.getArchivo().getName();
+                        //System.out.println(GuardarArchivo);
+                    } // Fin If
+                    fr = new FileReader(archivo_abrir);
+                    br = new BufferedReader(fr);
+                    try {
+                        br.close();
+                        fr.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } // Fin Try Catch
+                    salvado = false;
+                } // Fin If
+                JOptionPane.showMessageDialog(this, "Archivo Cargado.");
+            } // Fin If
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se puede abrir el archivo porque no existe");
+        } // Fin Try Catch
+
+
+    }//GEN-LAST:event_Btn_abrir_archivoActionPerformed
+
+    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+        // TODO add your handling code here:
+        if (!(archivo_para_cruzar == null)) {
+            boolean puede_cruzarse = false;
+            /*
+            Reviso si el archivo tiene relación de campos y también meto en un
+            arraylist todos los campos de ambos archivos
+             */
+            campos_para_cruzar.clear();
+            int ya = 0;
+            for (int j = 0; j < archivo_actual.getCampos().size(); j++) {
+                campos_para_cruzar.add(archivo_actual.getCampos().get(j));
+                for (int k = 0; k < archivo_para_cruzar.getCampos().size(); k++) {
+                    if (archivo_para_cruzar.getCampos().get(k).campos_para_cruce().
+                            equals(archivo_actual.getCampos().get(j).campos_para_cruce())) {
+                        puede_cruzarse = true;
+                    } else {
+                        if (ya == 0) {
+                            campos_para_cruzar.add(archivo_para_cruzar.getCampos().get(k));
+                        }
+                    }
+                }//fin for
+                ya++;
+            }//fin for
+            //Procedo a la creación del archivo cruzado
+            if (puede_cruzarse) {
+                //limpio la tabla
+                jTbl_CamposParaCruceSelecionar.setModel(new javax.swing.table.DefaultTableModel(
+                        new Object[][]{},
+                        new String[]{}
+                ));
+                jTbl_CamposCruzados.setModel(new javax.swing.table.DefaultTableModel(
+                        new Object[][]{},
+                        new String[]{}
+                ));
+                //agarro el modelo de la tabla y meto los campos a dicha tabla
+                DefaultTableModel model = (DefaultTableModel) jTbl_CamposParaCruceSelecionar.getModel();
+                model.addColumn("Nombre del Campo");
+                model.addColumn("Tipo de Dato");
+                model.addColumn("Longitud del Campo");
+                String campos_en_string = "";//servirá para hacer .split
+                String[] split;
+                for (int i = 0; i < campos_para_cruzar.size(); i++) {
+                    Object[] new_row = new Object[model.getColumnCount()];
+                    campos_en_string
+                            += (campos_para_cruzar.get(i).getNombre() + "¡"
+                            + campos_para_cruzar.get(i).getTipo_de_dato() + "¡"
+                            + campos_para_cruzar.get(i).getLongitud());
+                    System.out.println(campos_para_cruzar.get(i).getNombre() + "¡");
+                    System.out.println(campos_para_cruzar.get(i).getTipo_de_dato() + "¡");
+                    System.out.println(campos_para_cruzar.get(i).getLongitud() + "¡");
+                    split = campos_en_string.split("¡");
+                    campos_en_string = "";
+                    for (int j = 0; j < model.getColumnCount(); j++) {
+                        new_row[j] = split[j];
+                    }//fin for
+                    model.addRow(new_row);
+                }//fin for
+                jTbl_CamposParaCruceSelecionar.setModel(model);
+            } else {
+                JOptionPane.showMessageDialog(this, "No es posible cruzar los archivos prque no existe una relación de campos entre ambos archivos");
+            }//fin if interior
+        } else {
+            JOptionPane.showMessageDialog(this, "Todavía no has seleccionado un archivo para cruzar.");
+        }      // TODO add your handling code here:
+    }//GEN-LAST:event_jButton24ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        if (jTbl_CamposParaCruceSelecionar.getRowCount() < 1) {
+            JOptionPane.showMessageDialog(this, "No existen mas campos para cruzar.");
+        } else if (jTbl_CamposParaCruceSelecionar.getSelectedRow() >= 0) {
+            //campos_para_cruzar.remove(jTbl_CamposParaCruceSelecionar.getSelectedRow());
+            String nombre_campo = jTbl_CamposParaCruceSelecionar.getValueAt(jTbl_CamposParaCruceSelecionar.getSelectedRow(), 0).toString();
+            DefaultTableModel modelo = (DefaultTableModel) jTbl_CamposCruzados.getModel();
+            modelo.addColumn(nombre_campo);
+            jTbl_CamposCruzados.setModel(modelo);
+            cont++;
+        } else {
+            JOptionPane.showMessageDialog(this, "No has seleccionado un campo de la tabla.");
+        }        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        // CIERRA EL ARCHIVO Y PREGUNTA SI SE DESEA GUARDAR O NO
+        try {
+            Boolean existe = false;
+            JFileChooser directorio = new JFileChooser("./");
+            directorio.setApproveButtonText("Guardar");
+            int seleccion = directorio.showOpenDialog(null);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                File archivo = new File(directorio.getSelectedFile() + ".txt");
+                BufferedWriter salida = new BufferedWriter(new FileWriter(archivo));
+                salida.close();
+                // CARGADO DE ARCHIVOS A EL ARCHIVO BINARIO
+                int ID;
+                aa.cargarArchivo();
+                for (int i = 0; i < aa.getLista_archivos().size(); i++) {
+                    if (aa.getLista_archivos().get(i).getArchivo().getName().equals(archivo.getName())) {
+                        existe = true;
+                    } // Fin If
+                } // Fin For
+                if (existe == false) {
+                    ID = aa.GenerarId();
+                    archivo_actual = new Archivo(archivo, ID);
+                    GuardarArchivo = archivo.getName();
+                    aa.AddArchivo(archivo_actual);
+                    aa.escribirArchivo();
+                    archivo_actual = null;
+                    JOptionPane.showMessageDialog(null, "¡Se ha creado su archivo exitosamente!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se puede crear el archivo porque ya existe");
+                } // Fin If
+            } // Fin If
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            File archivo_abrir = null;
+            FileReader fr = null;
+            BufferedReader br = null;
+            TA_ArchivoAbierto.setText("");
+            JFileChooser filechooser = new JFileChooser("./");
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de Texto", "txt");
+            FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Imagenes", "jpg", "png", "bmp");
+            filechooser.setFileFilter(filtro);
+            filechooser.addChoosableFileFilter(filtro2);
+            int seleccion = filechooser.showOpenDialog(null);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                archivo_abrir = filechooser.getSelectedFile();
+                GuardarArchivo = archivo_abrir.getName();
+                boolean valid = false;
+                aa.cargarArchivo();
+                for (int i = 0; i < aa.getLista_archivos().size(); i++) {
+                    if (aa.getLista_archivos().get(i).getArchivo().equals(archivo_abrir)) {
+                        valid = true;
+                        archivo_actual = aa.getLista_archivos().get(i);
+                        formatear_CBbox_Modificar();
+                        formatear_CBbox_borrar();
+                        listar_campos();
+                        for (int j = 0; j < archivo_actual.getCampos().size(); j++) {
+                            campos_nuevos.add(archivo_actual.getCampos().get(j));
+                        } // Fin For
+                        break;
+                    } // Fin If
+                } // Fin For
+                if (!valid) {
+                    // CARGADO DE ARCHIVOS A EL ARCHIVO BINARIO
+                    int ID;
+                    aa.cargarArchivo();
+                    ID = aa.GenerarId();
+                    archivo_actual = new Archivo(archivo_abrir, ID);
+                    GuardarArchivo = null;
+                    aa.AddArchivo(archivo_actual);
+                    aa.escribirArchivo();
+                    formatear_CBbox_Modificar();
+                    formatear_CBbox_borrar();
+                    listar_campos();
+                    GuardarArchivo = archivo_actual.getArchivo().getName();
+                } // Fin If
+                fr = new FileReader(archivo_abrir);
+                br = new BufferedReader(fr);
+                String linea;
+                TA_ArchivoAbierto.append("");
+                while ((linea = br.readLine()) != null) {
+                    TA_ArchivoAbierto.append(linea);
+                    TA_ArchivoAbierto.append("\n");
+                } // Fin While
+                try {
+                    br.close();
+                    fr.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } // Fin Try Catch
+                arboles.cargarArchivo();
+                // Esto verifica que el arbol no exista
+                for (int i = 0; i < arboles.getListaarboles().size(); i++) {
+                    if (arboles.getListaarboles().get(i).getArchivo().equals(archivo_actual.getArchivo())) {
+                        arbol_actual = arboles.getListaarboles().get(i).getArbol();
+                        break;
+                    } // Fin If
+                } // Fin For
+                arbolessecundarios.cargarArchivo();
+                for (int i = 0; i < arbolessecundarios.getListaarboles().size(); i++) {
+                    if (arbolessecundarios.getListaarboles().get(i).getIDArchivoActual() == archivo_actual.getID()) {
+                        arbol_secundarioactual = arbolessecundarios.getListaarboles().get(i).getArbolSecundario();
+                        break;
+                    } // Fin If
+                } // Fin For
+                salvado = false;
+                this.setVisible(false);
+            }
+        } catch (Exception e) {
+        }
+        try {
+            // Actualiza el Text Area
+            FileReader fr = null;
+            BufferedReader br = null;
+            fr = new FileReader(archivo_actual.getArchivo());
+            br = new BufferedReader(fr);
+            TA_ArchivoAbierto.setText("");
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                TA_ArchivoAbierto.append(linea);
+            } // Fin While
+            try {
+                br.close();
+                fr.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } // Fin Try Catch
+            // Actualiza el file dentro del archivo binario
+            EscribirCamposBinario();
+            formatear_CBbox_Modificar();
+            formatear_CBbox_borrar();
+            listar_campos();
+            if (secreo == true || semodifico == true || seborro == true) {
+                JOptionPane.showMessageDialog(null, "Archivo Salvado Exitosamente");
+            } // Fin If
+            secreo = false;
+            semodifico = false;
+            seborro = false;
+            salvado = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String nombre_campo = jTbl_CamposParaCruceSelecionar.getValueAt(jTbl_CamposParaCruceSelecionar.getSelectedRow(), 0).toString();
+        for (int i = 0; i < cont; i++) {
+            if (campos_para_cruzar.get(i).getNombre().equals(nombre_campo)) {
+                try {
+                    salvado = true;
+                    boolean existe = false;
+                    String nombre = campos_para_cruzar.get(i).getNombre();
+                    // Validacion del campo para ver si el nombre ya existe
+                    for (int j = 0; j < campos_nuevos.size(); j++) {
+                        if (campos_nuevos.get(j).getNombre().equals(nombre)) {
+                            existe = true;
+                        } // Fin If
+                    }// Fin For
+                    String tipo_de_dato = campos_para_cruzar.get(i).getTipo_de_dato();
+                    int longitud = campos_para_cruzar.get(i).getLongitud();
+                    boolean llave_primaria = campos_para_cruzar.get(i).isLlavePrimaria();
+                    boolean llave_secundaria = campos_para_cruzar.get(i).isLlave_secundaria();
+                    int ID_campo, ID_archivo;
+                    ID_campo = GenerarIDCampo();
+                    ID_archivo = archivo_actual.getID();
+                    Campo campo_nuevo = new Campo(ID_campo, ID_archivo, nombre, tipo_de_dato, longitud, llave_primaria, llave_secundaria);
+                    JOptionPane.showMessageDialog(null, "Archivo cruzado exitosamente");
+                    try {
+                        // Actualiza el Text Area
+                        FileReader fr = null;
+                        BufferedReader br = null;
+                        fr = new FileReader(archivo_actual.getArchivo());
+                        br = new BufferedReader(fr);
+                        TA_ArchivoAbierto.setText("");
+                        String linea;
+                        while ((linea = br.readLine()) != null) {
+                            TA_ArchivoAbierto.append(linea);
+                        } // Fin While
+                        try {
+                            br.close();
+                            fr.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } // Fin Try Catch
+                        // Actualiza el file dentro del archivo binario
+                        EscribirCamposBinario();
+                        formatear_CBbox_Modificar();
+                        formatear_CBbox_borrar();
+                        listar_campos();
+                        if (secreo == true || semodifico == true || seborro == true) {
+                            JOptionPane.showMessageDialog(null, "Archivo Salvado Exitosamente");
+                        } // Fin If
+                        secreo = false;
+                        semodifico = false;
+                        seborro = false;
+                        salvado = false;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    // Fin If
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+////                lineacampos = campos_para_cruzar.get(i).getNombre() + "¡" + campos_para_cruzar.get(i).getTipo_de_dato() + "¡" + campos_para_cruzar.get(i).getLongitud() + "¡" + campos_para_cruzar.get(i).isLlavePrimaria() + "¡" + campos_para_cruzar.get(i).isLlave_secundaria() + "¡";
+//                try {
+//                    salvado = true;
+//                    boolean existe = false;
+//                    String nombre = campos_para_cruzar.get(i).getNombre();
+//                    // Validacion del campo para ver si el nombre ya existe
+//                    for (int j = 0; j < campos_nuevos.size(); j++) {
+//                        if (campos_nuevos.get(j).getNombre().equals(nombre)) {
+//                            existe = true;
+//                        } // Fin If
+//                    }// Fin For
+//                    String tipo_de_dato;
+//                    int longitud;
+//                    tipo_de_dato = campos_para_cruzar.get(i).getTipo_de_dato();
+//                    longitud = campos_para_cruzar.get(i).getLongitud();
+//                    boolean llave_primaria = campos_para_cruzar.get(i).isLlavePrimaria();
+//                    boolean llave_secundaria = campos_para_cruzar.get(i).isLlave_secundaria();
+//                    int ID_campo, ID_archivo;
+//                    ID_campo = GenerarIDCampo();
+//                    ID_archivo = archivo_actual.getID();
+//                    Campo campo_nuevo = new Campo(ID_campo, ID_archivo, nombre, tipo_de_dato, longitud, llave_primaria, llave_secundaria);
+//                    try {
+//                        // Actualiza el Text Area
+//                        FileReader fr = null;
+//                        BufferedReader br = null;
+//                        fr = new FileReader(archivo_actual.getArchivo());
+//                        br = new BufferedReader(fr);
+//                        TA_ArchivoAbierto.setText("");
+//                        String linea;
+//                        while ((linea = br.readLine()) != null) {
+//                            TA_ArchivoAbierto.append(linea);
+//                        } // Fin While
+//                        try {
+//                            br.close();
+//                            fr.close();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        } // Fin Try Catch
+//                        // Actualiza el file dentro del archivo binario
+//                        EscribirCamposBinario();
+//                        formatear_CBbox_Modificar();
+//                        formatear_CBbox_borrar();
+//                        listar_campos();
+//                        if (secreo == true || semodifico == true || seborro == true) {
+//                            JOptionPane.showMessageDialog(null, "Archivo Salvado Exitosamente");
+//                        } // Fin If
+//                        secreo = false;
+//                        semodifico = false;
+//                        seborro = false;
+//                        salvado = false;
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+            }
+        }
+
+    }//GEN-LAST:event_jButton26ActionPerformed
     private void GenerarPersonFile() {
+
         try {
             String lineacampos;
             // Obtenemos los campos en "duro" y los guardamos en un arreglo
@@ -4107,131 +4791,208 @@ public class Main extends javax.swing.JFrame {
                 aa.escribirArchivo();
             } // Fin For
             ArrayList<String> PersonFirstName = new ArrayList();
-            // Se generan 60 nombres aleatorios
-            PersonFirstName.add("Diego");
-            PersonFirstName.add("Bilgai");
-            PersonFirstName.add("Hector");
-            PersonFirstName.add("Onasis");
-            PersonFirstName.add("Monica");
-            PersonFirstName.add("Valeria");
-            PersonFirstName.add("Ana");
-            PersonFirstName.add("Cecilia");
-            PersonFirstName.add("Jesus");
-            PersonFirstName.add("Ariel");
+            // Se generan 100 nombres aleatorios
             PersonFirstName.add("Sahory");
             PersonFirstName.add("Skarleth");
-            PersonFirstName.add("Alejandro");
-            PersonFirstName.add("Fernando");
-            PersonFirstName.add("Paola");
-            PersonFirstName.add("David");
-            PersonFirstName.add("Josue");
-            PersonFirstName.add("Daniel");
-            PersonFirstName.add("Andres");
-            PersonFirstName.add("Carlos");
-            PersonFirstName.add("Eduardo");
-            PersonFirstName.add("Aline");
-            PersonFirstName.add("Alejandra");
-            PersonFirstName.add("Elsi");
-            PersonFirstName.add("Xiomara");
-            PersonFirstName.add("Juan");
-            PersonFirstName.add("Jose");
-            PersonFirstName.add("Omar");
-            PersonFirstName.add("Maria");
-            PersonFirstName.add("Catalina");
-            PersonFirstName.add("Pamela");
-            PersonFirstName.add("Pablo");
-            PersonFirstName.add("Cristopher");
-            PersonFirstName.add("Roberto");
-            PersonFirstName.add("Rafael");
-            PersonFirstName.add("Carlo");
-            PersonFirstName.add("Leonardo");
-            PersonFirstName.add("Karen");
-            PersonFirstName.add("Geovanny");
-            PersonFirstName.add("Rodrigo");
-            PersonFirstName.add("Nicole");
-            PersonFirstName.add("Ariela");
-            PersonFirstName.add("Cristina");
-            PersonFirstName.add("Ashley");
-            PersonFirstName.add("Andrea");
-            PersonFirstName.add("Mario");
-            PersonFirstName.add("Gisselle");
-            PersonFirstName.add("Erica");
-            PersonFirstName.add("Diana");
+            PersonFirstName.add("Jesus");
+            PersonFirstName.add("Ariel");
+            PersonFirstName.add("Gustavo");
+            PersonFirstName.add("Antonio");
+            PersonFirstName.add("Daniela");
+            PersonFirstName.add("Samantha");
+            PersonFirstName.add("Hugo");
+            PersonFirstName.add("Mateo");
+            PersonFirstName.add("Estefania");
+            PersonFirstName.add("Fanny");
             PersonFirstName.add("Santiago");
-            PersonFirstName.add("Angel");
-            PersonFirstName.add("Matias");
-            PersonFirstName.add("Soad");
-            PersonFirstName.add("Gabriel");
-            PersonFirstName.add("Ruben");
-            PersonFirstName.add("Alvaro");
-            PersonFirstName.add("Luisa");
-            PersonFirstName.add("Adrian");
-            PersonFirstName.add("Allan");
-            PersonFirstName.add("Javier");
+            PersonFirstName.add("Samir");
+            PersonFirstName.add("Katherin");
+            PersonFirstName.add("Kathia");
+            PersonFirstName.add("Lionel");
+            PersonFirstName.add("Andres");
+            PersonFirstName.add("Daniela");
+            PersonFirstName.add("Karla");
+            PersonFirstName.add("Cristiano");
+            PersonFirstName.add("Ronaldo");
+            PersonFirstName.add("Sofia");
+            PersonFirstName.add("Amanda");
+            PersonFirstName.add("Juan");
+            PersonFirstName.add("Roman");
+            PersonFirstName.add("Ammy");
+            PersonFirstName.add("Sara");
+            PersonFirstName.add("Josue");
+            PersonFirstName.add("Alberto");
+            PersonFirstName.add("Michell");
+            PersonFirstName.add("Cristina");
+            PersonFirstName.add("Carlos");
+            PersonFirstName.add("Omar");
+            PersonFirstName.add("Jimena");
+            PersonFirstName.add("Jireth");
+            PersonFirstName.add("David");
+            PersonFirstName.add("Jason");
+            PersonFirstName.add("Karoline");
+            PersonFirstName.add("Camila");
+            PersonFirstName.add("Eduartdo");
+            PersonFirstName.add("Ricardo");
+            PersonFirstName.add("Vianka");
+            PersonFirstName.add("Abigail");
+            PersonFirstName.add("Aldair");
+            PersonFirstName.add("Armando");
+            PersonFirstName.add("Gloria");
+            PersonFirstName.add("Doris");
+            PersonFirstName.add("Jorge");
+            PersonFirstName.add("Francisco");
+            PersonFirstName.add("Nicolle");
+            PersonFirstName.add("Issis");
+            PersonFirstName.add("Manuel");
+            PersonFirstName.add("Gerardo");
+            PersonFirstName.add("Shadde");
+            PersonFirstName.add("Aleeiya");
+            PersonFirstName.add("Tomas");
             PersonFirstName.add("Luis");
+            PersonFirstName.add("Fabian");
+            PersonFirstName.add("Sandra");
+            PersonFirstName.add("Mabel");
+            PersonFirstName.add("Javier");
+            PersonFirstName.add("Camilo");
+            PersonFirstName.add("Valeria");
+            PersonFirstName.add("Marina");
+            PersonFirstName.add("Marcelo");
+            PersonFirstName.add("Jonathan");
+            PersonFirstName.add("Maribel");
+            PersonFirstName.add("Nadir");
+            PersonFirstName.add("Jose");
+            PersonFirstName.add("Edgardo");
+            PersonFirstName.add("Maria");
+            PersonFirstName.add("Ester");
+            PersonFirstName.add("Hector");
+            PersonFirstName.add("Herson");
+            PersonFirstName.add("Alondra");
+            PersonFirstName.add("Bessy");
+            PersonFirstName.add("Patricio");
+            PersonFirstName.add("bob");
+            PersonFirstName.add("Mario");
+            PersonFirstName.add("Angelina");
+            PersonFirstName.add("Angela");
+            PersonFirstName.add("Lana");
+            PersonFirstName.add("Paulo");
+            PersonFirstName.add("Diego");
+            PersonFirstName.add("Irene");
+            PersonFirstName.add("Angelica");
+            PersonFirstName.add("Edwin");
+            PersonFirstName.add("Erick");
+            PersonFirstName.add("Ericka");
+            PersonFirstName.add("Marcela");
+            PersonFirstName.add("Mauricio");
+            PersonFirstName.add("Fabricio");
+            PersonFirstName.add("Yadira");
+            PersonFirstName.add("Yanira");
+            PersonFirstName.add("Joaquin");
+            PersonFirstName.add("Anthony");
+            PersonFirstName.add("Ezequiel");
+            PersonFirstName.add("Dua");
+            PersonFirstName.add("Olivia");
+            PersonFirstName.add("Alicia");
             ArrayList<String> PersonLastName = new ArrayList();
-            // Se generan 60 apellidos aleatorios
-            PersonLastName.add("Varela");
-            PersonLastName.add("Diaz");
-            PersonLastName.add("Reyes");
-            PersonLastName.add("Andino");
-            PersonLastName.add("Castillo");
-            PersonLastName.add("Mendoza");
-            PersonLastName.add("Meraz");
-            PersonLastName.add("Padilla");
-            PersonLastName.add("Romero");
-            PersonLastName.add("Fuentes");
+            // Se generan 100 apellidos aleatorios
             PersonLastName.add("Cano");
-            PersonLastName.add("Rodriguez");
-            PersonLastName.add("Osorto");
-            PersonLastName.add("Coello");
-            PersonLastName.add("Dominguez");
-            PersonLastName.add("Fernandez");
-            PersonLastName.add("Valladares");
-            PersonLastName.add("Cortes");
-            PersonLastName.add("Marcia");
-            PersonLastName.add("Murcia");
-            PersonLastName.add("Pineda");
-            PersonLastName.add("Paz");
-            PersonLastName.add("Rojas");
-            PersonLastName.add("Morales");
-            PersonLastName.add("Chirinos");
-            PersonLastName.add("Gallo");
-            PersonLastName.add("Velasquez");
-            PersonLastName.add("Miranda");
-            PersonLastName.add("Melendez");
-            PersonLastName.add("Garcia");
-            PersonLastName.add("Turcios");
-            PersonLastName.add("Aguilera");
-            PersonLastName.add("Flores");
-            PersonLastName.add("Barahona");
-            PersonLastName.add("Alvarado");
-            PersonLastName.add("Ortiz");
-            PersonLastName.add("Amaya");
-            PersonLastName.add("Iscoa");
-            PersonLastName.add("Gonzalez");
-            PersonLastName.add("Lopez");
-            PersonLastName.add("Cruz");
-            PersonLastName.add("Sanchez");
-            PersonLastName.add("Mejia");
-            PersonLastName.add("Martinez");
-            PersonLastName.add("Hernandez");
-            PersonLastName.add("Perez");
+            PersonLastName.add("Herrera");
+            PersonLastName.add("Meraz");
             PersonLastName.add("Duarte");
+            PersonLastName.add("Pineda");
+            PersonLastName.add("Orellana");
+            PersonLastName.add("Martinez");
+            PersonLastName.add("Perez");
+            PersonLastName.add("Hernandez");
+            PersonLastName.add("Rodriguez");
             PersonLastName.add("Figueroa");
-            PersonLastName.add("Licona");
-            PersonLastName.add("Gomez");
-            PersonLastName.add("Caceres");
-            PersonLastName.add("Ayala");
-            PersonLastName.add("Suazo");
-            PersonLastName.add("Cabrera");
-            PersonLastName.add("Sosa");
+            PersonLastName.add("Sorto");
+            PersonLastName.add("Castillo");
+            PersonLastName.add("Lopez");
+            PersonLastName.add("Morales");
+            PersonLastName.add("Ortiz");
             PersonLastName.add("Torres");
-            PersonLastName.add("Caballero");
-            PersonLastName.add("Acosta");
-            PersonLastName.add("Silva");
+            PersonLastName.add("Espinal");
+            PersonLastName.add("Flores");
+            PersonLastName.add("Murillo");
+            PersonLastName.add("Fuentes");
+            PersonLastName.add("Espinoza");
+            PersonLastName.add("Paz");
+            PersonLastName.add("Messi");
+            PersonLastName.add("Nuñez");
+            PersonLastName.add("Cuccitini");
+            PersonLastName.add("Cortez");
+            PersonLastName.add("Velasquez");
+            PersonLastName.add("Mendoza");
+            PersonLastName.add("Valle");
+            PersonLastName.add("Vergara");
+            PersonLastName.add("Navarro");
+            PersonLastName.add("Gallardo");
+            PersonLastName.add("Do Santos");
+            PersonLastName.add("Orellana");
+            PersonLastName.add("Oliva");
+            PersonLastName.add("Salazar");
+            PersonLastName.add("Aquilar");
+            PersonLastName.add("Aguilera");
+            PersonLastName.add("Caceres");
+            PersonLastName.add("Godoy");
+            PersonLastName.add("Romero");
+            PersonLastName.add("Lagos");
             PersonLastName.add("Medina");
-            PersonLastName.add("Galeano");
+            PersonLastName.add("Fernandez");
+            PersonLastName.add("Bustillo");
+            PersonLastName.add("Moreno");
+            PersonLastName.add("Carvajal");
+            PersonLastName.add("Ponce");
+            PersonLastName.add("Ochoa");
+            PersonLastName.add("Leiva");
+            PersonLastName.add("Ruiz");
+            PersonLastName.add("Rivera");
+            PersonLastName.add("Rivera");
+            PersonLastName.add("Brito");
+            PersonLastName.add("Estrada");
+            PersonLastName.add("Rico");
+            PersonLastName.add("Otero");
+            PersonLastName.add("Castellano");
+            PersonLastName.add("Sevilla");
+            PersonLastName.add("Villalobos");
+            PersonLastName.add("Lainez");
+            PersonLastName.add("Zapata");
+            PersonLastName.add("Bruschi");
+            PersonLastName.add("Mejia");
+            PersonLastName.add("Mondragon");
+            PersonLastName.add("Melendez");
+            PersonLastName.add("Fiallos");
+            PersonLastName.add("Diaz");
+            PersonLastName.add("Barrientos");
+            PersonLastName.add("Guardado");
+            PersonLastName.add("Rios");
+            PersonLastName.add("Galvan");
+            PersonLastName.add("Coleman");
+            PersonLastName.add("Vargas");
+            PersonLastName.add("Rosa");
+            PersonLastName.add("Castañeda");
+            PersonLastName.add("Jimenez");
+            PersonLastName.add("Juearez");
+            PersonLastName.add("Avila");
+            PersonLastName.add("Lozano");
+            PersonLastName.add("Benitez");
+            PersonLastName.add("Campos");
+            PersonLastName.add("Sanchez");
+            PersonLastName.add("Ramirez");
+            PersonLastName.add("Castro");
+            PersonLastName.add("Pecas");
+            PersonLastName.add("Sousa");
+            PersonLastName.add("Fonseca");
+            PersonLastName.add("Rojas");
+            PersonLastName.add("Rubio");
+            PersonLastName.add("Bravo");
+            PersonLastName.add("Grant");
+            PersonLastName.add("Sifuentes");
+            PersonLastName.add("Beltran");
+            PersonLastName.add("Higuita");
+            PersonLastName.add("Maradona");
+            PersonLastName.add("Palommo");
             BTree Btreepersons_secundario = new BTree(6);
             Archivoconarbolb archivo_prueba = new Archivoconarbolb(archivo_actual.getArchivo(), archivo_actual.getID());
             Archivoarbolsecundario archivo_prueba_secundario = new Archivoarbolsecundario(archivo_actual.getArchivo(), archivo_actual.getID(), Btreepersons_secundario);
@@ -4246,16 +5007,16 @@ public class Main extends javax.swing.JFrame {
             // Escribimos los campos en "duro" dentro del archivo
             random = new Random();
             int personID;
-            personID = 100000;
+            personID = 1;
             long RRN;
             String nombre, apellido, registro, primaryKey, secondaryKey;
             int edad, cityID;
             for (int i = 1; i <= 10000; i++) {
                 // Se iran escribiendo de forma aleatoria los registros dentro del archivo
-                nombre = PersonFirstName.get((int) Math.floor(Math.random() * 60));
-                apellido = PersonLastName.get((int) Math.floor(Math.random() * 60));
+                nombre = PersonFirstName.get((int) Math.floor(Math.random() * 90));
+                apellido = PersonLastName.get((int) Math.floor(Math.random() * 90));
                 edad = 1 + random.nextInt(99);
-                cityID = 1 + random.nextInt(99);
+                cityID = 1 + random.nextInt(50);
                 registro = personID + "|" + nombre + " " + apellido + "|" + edad + "|" + cityID + "|";
                 // Llena de espacios si no se completaron los 35 caracteres
                 registro += LlenadoEspacios(registro.length(), 35);
@@ -4268,7 +5029,7 @@ public class Main extends javax.swing.JFrame {
                 primaryKey = espacios.substring(0, 6 - primaryKey.length()) + primaryKey;
                 BTreePersons.B_Tree_Insert(primaryKey, RRN);
                 personID++;
-                // Obtenemos la llave secundaria para poder insertarla en el arbolB
+//                 Obtenemos la llave secundaria para poder insertarla en el arbolB
                 secondaryKey = String.valueOf(cityID);
                 secondaryKey = espacios.substring(0, 2 - secondaryKey.length()) + secondaryKey;
                 if (Btreepersons_secundario.B_Tree_Search(Btreepersons_secundario.getRaiz(), secondaryKey) == null) {
@@ -4293,7 +5054,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Archivo cargado exitosamente");
         } catch (Exception e) {
             e.printStackTrace();
-        } // Fin Try Catch
+        }
     }
 
     private void GenerarCityFile() {
@@ -4468,7 +5229,7 @@ public class Main extends javax.swing.JFrame {
             flujo.close();
         } catch (Exception e) {
             e.printStackTrace();
-        } // Fin Try Catch
+        }
     }
 
     private boolean ValidaciondeingresoTabla(JTable tabla, boolean guardar) {
@@ -4632,12 +5393,13 @@ public class Main extends javax.swing.JFrame {
     ArrayList<Long> rrn_llaves_en_orden = new ArrayList();
 
     public void listar_registros() {
-        jTbl_ListarRegistros.setModel(new DefaultTableModel());
-        DefaultTableModel model = (DefaultTableModel) jTbl_ListarRegistros.getModel();
+        jTbl_ListarRegistros1.setModel(new DefaultTableModel());
+        DefaultTableModel model = (DefaultTableModel) jTbl_ListarRegistros1.getModel();
         for (int i = 0; i < archivo_actual.getCampos().size(); i++) {
             model.addColumn(archivo_actual.getCampos().get(i).getNombre());
         } // Fin For
-        jTbl_ListarRegistros.setModel(model);
+
+        jTbl_ListarRegistros1.setModel(model);
         for (int i = retroceder; i < avanzar && i < rrn_llaves_en_orden.size(); i++) {
             long RRN = rrn_llaves_en_orden.get(i);
             try {
@@ -4713,6 +5475,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Btn_abrir_archivo;
     private javax.swing.JComboBox<String> CB_CampoABorrar;
     private javax.swing.JComboBox<String> CB_CampoAModificar;
     private javax.swing.JComboBox<String> CB_LlavesBuscarRegistros;
@@ -4722,6 +5485,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JDialog JD_Agregar_registro;
     private javax.swing.JDialog JD_Buscar_registro;
     private javax.swing.JDialog JD_Crearcampo;
+    private javax.swing.JDialog JD_Cruzar_Archivo;
     private javax.swing.JDialog JD_EliminarCampos;
     private javax.swing.JDialog JD_Eliminar_registro;
     private javax.swing.JDialog JD_Listar_registros;
@@ -4762,6 +5526,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
+    private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -4783,10 +5551,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -4800,7 +5570,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
@@ -4823,14 +5596,19 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel45;
     private javax.swing.JPanel jPanel46;
     private javax.swing.JPanel jPanel47;
+    private javax.swing.JPanel jPanel48;
+    private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel50;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
@@ -4838,7 +5616,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTable jTbl_ListarRegistros;
+    private javax.swing.JTable jTbl_CamposCruzados;
+    private javax.swing.JTable jTbl_CamposParaCruceSelecionar;
+    private javax.swing.JTable jTbl_ListarRegistros1;
     private javax.swing.JTable jTbl_tablaRegistros;
     private javax.swing.JTextField jTf_LLaveEliminarRegistros;
     private javax.swing.JTextField jTf_buscarRegistros;
@@ -4887,5 +5667,8 @@ private Administrar_Archivos aa = new Administrar_Archivos("./Archivos.dmo");
     private String llaveprimariaTemp;
     private String llavesecundariaTemp;
     private int rrnabuscar = 0;
-
+    Archivo archivo_para_cruzar = null;
+    ArrayList<Campo> campos_para_cruzar = new ArrayList();
+    ArrayList<Campo> campos_cruzados = new ArrayList();
+    private int cont = 0;
 }

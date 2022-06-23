@@ -1,8 +1,14 @@
+
 package proyectoedd2;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author diego
+ */
 public class BTree implements Serializable {
 
     int orden;
@@ -48,7 +54,7 @@ public class BTree implements Serializable {
     public int llavesInferiores() {
         return Math.max((orden / 2) - 1, 1);
     } // Fin Llaves Inferiores
-
+    
     public NodoIndice B_Tree_Search(int index_node, String llave_primaria) {
         int num = 0;
         Node nodo = nodos.get((int) index_node);
